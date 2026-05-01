@@ -49,7 +49,24 @@ export async function updateSession(request: NextRequest) {
     }
   }
 
+  // Redirect authenticated users away from auth pages — but allow /onboarding
+  // if their profile is still incomplete
   if (user && isPublic && pathname !== '/') {
+    if (pathname.startsWith('/onboarding')) {
+      const { data: profile } = await supabase
+        .from('users')
+        .select('is_profile_complete')
+        .eq('id', user.id)
+        .single()
+      // Profile complete → leave onboarding, go to home
+      if (profile?.is_profile_complete) {
+        const url = request.nextUrl.clone()
+        url.pathname = '/home'
+        return NextResponse.redirect(url)
+      }
+      // Profile incomplete → stay on onboarding
+      return supabaseResponse
+    }
     const url = request.nextUrl.clone()
     url.pathname = '/home'
     return NextResponse.redirect(url)
