@@ -77,19 +77,8 @@ export default function SignUpPage() {
         return
       }
 
-      // Insert into public.users table
-      const { error: dbError } = await supabase.from('users').insert({
-        id: data.user.id,
-        display_name: displayName,
-        primary_role: selectedRole,
-        is_profile_complete: false,
-      })
-
-      if (dbError) {
-        setToast({ message: 'Failed to create user profile', type: 'error' })
-        setIsLoading(false)
-        return
-      }
+      // public.users row is auto-created by the on_auth_user_created DB trigger
+      // (display_name and primary_role flow via signUp metadata above)
 
       setToast({ message: 'Account created! Redirecting to onboarding...', type: 'success' })
 

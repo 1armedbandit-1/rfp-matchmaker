@@ -24,7 +24,7 @@ export async function updateSession(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   const { pathname } = request.nextUrl
 
-  const publicPaths = ['/', '/auth/sign-in', '/auth/sign-up']
+  const publicPaths = ['/', '/auth/sign-in', '/auth/sign-up', '/onboarding']
   const isPublic = publicPaths.some(p => pathname === p || (p !== '/' && pathname.startsWith(p)))
   const isApiRoute = pathname.startsWith('/api/')
 
@@ -35,7 +35,7 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  if (user && !isPublic && !isApiRoute && pathname !== '/onboarding') {
+  if (user && !isPublic && !isApiRoute) {
     const { data: profile } = await supabase
       .from('users')
       .select('is_profile_complete')
