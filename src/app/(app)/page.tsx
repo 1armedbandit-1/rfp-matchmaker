@@ -65,7 +65,7 @@ export default async function FeedPage() {
     like_count: p.like_count,
     comment_count: p.comment_count,
     created_at: p.created_at,
-    author: p.users as UserProfile,
+    author: p.users as unknown as UserProfile,
     user_has_liked: userLikes.includes(p.id),
   }))
 

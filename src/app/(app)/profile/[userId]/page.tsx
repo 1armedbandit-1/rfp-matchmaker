@@ -590,7 +590,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
                     like_count: p.like_count,
                     comment_count: p.comment_count,
                     created_at: p.created_at,
-                    author: p.users as UserProfile,
+                    author: p.users as unknown as UserProfile,
                   }}
                   currentUserId={session?.user.id || ''}
                 />
