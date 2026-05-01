@@ -26,14 +26,16 @@ export async function updateSession(request: NextRequest) {
 
   const publicPaths = ['/', '/auth/sign-in', '/auth/sign-up']
   const isPublic = publicPaths.some(p => pathname === p || (p !== '/' && pathname.startsWith(p)))
+  const isApiRoute = pathname.startsWith('/api/')
 
-  if (!user && !isPublic) {
+  // Let API routes handle their own auth — returning JSON 401 not HTML redirects
+  if (!user && !isPublic && !isApiRoute) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/sign-in'
     return NextResponse.redirect(url)
   }
 
-  if (user && !isPublic && pathname !== '/onboarding') {
+  if (user && !isPublic && !isApiRoute && pathname !== '/onboarding') {
     const { data: profile } = await supabase
       .from('users')
       .select('is_profile_complete')
@@ -49,7 +51,7 @@ export async function updateSession(request: NextRequest) {
 
   if (user && isPublic && pathname !== '/') {
     const url = request.nextUrl.clone()
-    url.pathname = '/feed'
+    url.pathname = '/home'
     return NextResponse.redirect(url)
   }
 
