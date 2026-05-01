@@ -47,7 +47,7 @@ export default async function Sidebar({ currentUserId }: SidebarProps) {
         <div className="rounded-2xl bg-white border border-[#EAEAEA] p-5 shadow-sm">
           <h3 className="font-bold text-sm text-[#1A1A1A] mb-3">Newest Members</h3>
           <div className="space-y-3">
-            {newestMembers.map((member: UserProfile) => (
+            {newestMembers.map((member: any) => (
               <Link
                 key={member.id}
                 href={`/profile/${member.id}`}
