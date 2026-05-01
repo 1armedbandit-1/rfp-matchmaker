@@ -27,7 +27,7 @@ export default function Nav({ user }: NavProps) {
 
   const isActive = (path: string) => pathname === path
   const navLinks = [
-    { label: 'Feed', href: '/' },
+    { label: 'Feed', href: '/home' },
     { label: 'People', href: '/people' },
     { label: 'Find My Match', href: '/match' },
   ]
@@ -36,7 +36,7 @@ export default function Nav({ user }: NavProps) {
     <nav className="sticky top-0 z-50 bg-white border-b border-[#EAEAEA]">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Left: Logo */}
-        <Link href="/" className="flex items-center gap-2 font-bold text-[#1A1A1A]">
+        <Link href="/home" className="flex items-center gap-2 font-bold text-[#1A1A1A]">
           {/* Inline SVG boxing glove icon */}
           <svg
             width="24"

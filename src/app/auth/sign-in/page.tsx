@@ -36,7 +36,7 @@ export default function SignInPage() {
       setToast({ message: error.message, type: 'error' })
       setIsLoading(false)
     } else {
-      router.push('/')
+      router.push('/home')
     }
   }
 
@@ -51,7 +51,7 @@ export default function SignInPage() {
     const { error } = await supabase.auth.signInWithOtp({
       email: magicLinkEmail,
       options: {
-        emailRedirectTo: `${window.location.origin}/`,
+        emailRedirectTo: `${window.location.origin}/home`,
       },
     })
 

@@ -329,7 +329,7 @@ export default function OnboardingPage() {
 
       setToast({ message: 'Profile complete! Welcome to the community', type: 'success' })
       setTimeout(() => {
-        router.push('/')
+        router.push('/home')
       }, 1500)
     } catch (error) {
       setToast({
