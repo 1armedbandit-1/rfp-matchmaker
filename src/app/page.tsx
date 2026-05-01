@@ -406,22 +406,74 @@ export default function HomePage() {
           box-shadow: 0 8px 24px rgba(0,0,0,0.4);
         }
 
+        /* ── PARTNERS BANNER ────────────────────── */
+        .rfp-partners {
+          position: relative;
+          background: #000;
+          overflow: hidden;
+        }
+
+        .rfp-partners-bg {
+          position: absolute;
+          inset: 0;
+          background-image: url('/partners-bg.jpg');
+          background-size: cover;
+          background-position: center 30%;
+          opacity: 0.25;
+        }
+
+        .rfp-partners-inner {
+          position: relative;
+          z-index: 1;
+          padding: 48px 40px 52px;
+          text-align: center;
+        }
+
+        .rfp-partners-title {
+          display: inline-block;
+          background: #000;
+          color: #fff;
+          font-size: clamp(20px, 3vw, 28px);
+          font-weight: 900;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          padding: 12px 40px;
+          border-radius: 50px;
+          margin-bottom: 36px;
+        }
+
+        .rfp-partners-logos {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 32px 48px;
+        }
+
+        .rfp-partner-logo {
+          height: 80px;
+          width: auto;
+          max-width: 140px;
+          object-fit: contain;
+          filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
+          transition: transform 0.2s, filter 0.2s;
+        }
+
+        .rfp-partner-logo:hover {
+          transform: scale(1.08);
+          filter: drop-shadow(0 4px 16px rgba(204,0,0,0.4));
+        }
+
         /* ── FOOTER ─────────────────────────────── */
         .rfp-footer {
-          background: #000;
-          border-top: 1px solid rgba(255,255,255,0.06);
-          padding: 40px;
+          background: #0a0a0a;
+          border-top: 1px solid rgba(255,255,255,0.08);
+          padding: 24px 40px;
           display: flex;
           align-items: center;
           justify-content: space-between;
           flex-wrap: wrap;
-          gap: 16px;
-        }
-
-        .rfp-footer img {
-          height: 36px;
-          width: auto;
-          opacity: 0.7;
+          gap: 12px;
         }
 
         .rfp-footer-links {
@@ -444,7 +496,12 @@ export default function HomePage() {
 
         .rfp-footer-copy {
           font-size: 12px;
-          color: rgba(255,255,255,0.25);
+          color: rgba(255,255,255,0.35);
+        }
+
+        .rfp-footer-contact {
+          font-size: 12px;
+          color: rgba(255,255,255,0.35);
         }
 
         /* ── SCROLL HINT ────────────────────────── */
@@ -488,6 +545,9 @@ export default function HomePage() {
           .rfp-features { padding: 64px 24px; }
           .rfp-stat { padding: 22px 24px; }
           .rfp-footer { justify-content: center; text-align: center; }
+          .rfp-partners-inner { padding: 40px 20px; }
+          .rfp-partner-logo { height: 60px; }
+          .rfp-partners-logos { gap: 24px 32px; }
         }
       `}</style>
 
@@ -645,16 +705,30 @@ export default function HomePage() {
         </a>
       </div>
 
+      {/* ── PARTNERS BANNER ── */}
+      <section className="rfp-partners">
+        <div className="rfp-partners-bg" />
+        <div className="rfp-partners-inner">
+          <div className="rfp-partners-title">Promotions in The Community</div>
+          <div className="rfp-partners-logos">
+            <img src="/logos/kamp-green.png"      alt="Kamp Green"            className="rfp-partner-logo" />
+            <img src="/logos/made-men.png"         alt="Made Men"              className="rfp-partner-logo" />
+            <img src="/logos/rcs2.png"             alt="Regal Combat Sports"   className="rfp-partner-logo" />
+            <img src="/logos/real-fight-promo.png" alt="Real Fight Promotions" className="rfp-partner-logo" />
+            <img src="/logos/247-fighting.png"     alt="24/7 Fighting"         className="rfp-partner-logo" />
+            <img src="/logos/toughman.png"         alt="Toughman Contest"      className="rfp-partner-logo" />
+          </div>
+        </div>
+      </section>
+
       {/* ── FOOTER ── */}
       <footer className="rfp-footer">
-        <img src="/logo.png" alt="Real Fight Promotions" />
+        <span className="rfp-footer-copy">Copyright 2026 | Real Fight Promotion</span>
         <ul className="rfp-footer-links">
-          <li><a href="/people">Fighters</a></li>
-          <li><a href="https://ta.realpromo.io/events">Events</a></li>
-          <li><a href="/match">Matchmaking</a></li>
-          <li><a href="/auth/sign-in">Sign In</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
         </ul>
-        <span className="rfp-footer-copy">© 2026 Real Fight Promotions. All rights reserved.</span>
+        <span className="rfp-footer-contact">Morgantown, WV · info@realpromo.io</span>
       </footer>
     </>
   )
