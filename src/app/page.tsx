@@ -587,10 +587,10 @@ export default function HomePage() {
 
         <div className="rfp-grid">
           <div className="rfp-card">
-            <div className="rfp-card-icon">🥊</div>
-            <h3 className="rfp-card-title">AI Matchmaking</h3>
+            <div className="rfp-card-icon">📋</div>
+            <h3 className="rfp-card-title">The Fight Board</h3>
             <p className="rfp-card-body">
-              Tell us your weight class, record, and goals. Our AI scans every profile and surfaces your best fits — managers, trainers, promoters, opponents.
+              Old-school community board meets AI agent. Post what you need, browse who's out there — then let the AI cut through the noise and put the right people in front of you. No more cold calls. No more dead ends.
             </p>
           </div>
 
