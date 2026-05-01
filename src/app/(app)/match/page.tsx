@@ -5,7 +5,6 @@ import { createClient } from '@/lib/supabase/client'
 import { Avatar } from '@/components/ui/avatar'
 import { RoleBadge } from '@/components/ui/role-badge'
 import { UserProfile, MatchResult } from '@/types'
-import { ROLE_LABELS } from '@/lib/utils'
 import Link from 'next/link'
 
 export default function MatchPage() {
