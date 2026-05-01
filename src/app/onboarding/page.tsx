@@ -252,10 +252,8 @@ export default function OnboardingPage() {
       setToast({ message: 'Phone number is required for verification', type: 'error' })
       return
     }
-    if (!state.selfieUrl) {
-      setToast({ message: 'Please upload your verification selfie', type: 'error' })
-      return
-    }
+    // selfie is strongly encouraged but not a hard blocker —
+    // accounts without one are flagged for manual review
 
     setIsLoading(true)
     try {
