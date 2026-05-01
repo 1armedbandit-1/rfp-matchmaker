@@ -7,6 +7,6 @@
     @apply bg-background-app text-text-primary font-sans antialiased;
   }
   * {
-    @apply border-border-DEFAULT;
+    @apply border-border;
   }
 }
