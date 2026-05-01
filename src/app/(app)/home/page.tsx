@@ -74,7 +74,7 @@ export default async function FeedPage() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
         {/* Left Column: Feed */}
         <div>
-          {currentUser && <PostComposer user={currentUser as UserProfile} onPost={() => {}} />}
+          {currentUser && <PostComposer user={currentUser as UserProfile} />}
 
           {posts.length > 0 ? (
             posts.map((post) => (

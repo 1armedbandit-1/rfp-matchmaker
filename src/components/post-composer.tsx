@@ -8,7 +8,7 @@ import { Camera, X } from 'lucide-react'
 
 interface PostComposerProps {
   user: UserProfile
-  onPost: (post: Post) => void
+  onPost?: (post: Post) => void
 }
 
 export default function PostComposer({ user, onPost }: PostComposerProps) {
@@ -86,7 +86,7 @@ export default function PostComposer({ user, onPost }: PostComposerProps) {
 
       if (!response.ok) throw new Error('Failed to create post')
       const newPost = await response.json()
-      onPost(newPost.post)
+      onPost?.(newPost.post)
 
       // Reset form
       setBody('')
