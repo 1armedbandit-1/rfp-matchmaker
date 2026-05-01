@@ -13,7 +13,7 @@ interface ChipProps {
   disabled?: boolean
 }
 
-export default function Chip({
+export function Chip({
   children,
   variant = 'primary',
   className,
@@ -57,3 +57,5 @@ export default function Chip({
     </button>
   )
 }
+
+export default Chip

@@ -7,7 +7,7 @@ interface RoleBadgeProps {
   role: string
 }
 
-export default function RoleBadge({ role }: RoleBadgeProps) {
+export function RoleBadge({ role }: RoleBadgeProps) {
   const label = ROLE_LABELS[role] || role
   const colorClass = ROLE_COLORS[role] || 'bg-gray-100 text-gray-800'
 
@@ -17,3 +17,5 @@ export default function RoleBadge({ role }: RoleBadgeProps) {
     </span>
   )
 }
+
+export default RoleBadge

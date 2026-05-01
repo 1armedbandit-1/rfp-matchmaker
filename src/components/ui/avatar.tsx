@@ -15,7 +15,7 @@ const sizeMap = {
   lg: 'w-24 h-24 text-lg',
 }
 
-export default function Avatar({ src, name, size = 'md' }: AvatarProps) {
+export function Avatar({ src, name, size = 'md' }: AvatarProps) {
   // Generate a color based on the name hash
   const getColorFromName = (str: string): string => {
     const colors = [
@@ -66,3 +66,5 @@ export default function Avatar({ src, name, size = 'md' }: AvatarProps) {
     </div>
   )
 }
+
+export default Avatar
