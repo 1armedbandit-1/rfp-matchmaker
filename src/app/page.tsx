@@ -1,7 +1,5 @@
 'use client'
 
-import Link from 'next/link'
-
 export default function HomePage() {
   return (
     <>
@@ -10,14 +8,53 @@ export default function HomePage() {
 
         body {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-          background: #0a0a0a;
+          background: #000;
           color: #fff;
           min-height: 100vh;
           overflow-x: hidden;
         }
 
-        /* ── NAV ────────────────────────────────── */
-        .rfp-nav {
+        .hero {
+          position: relative;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 40px 24px;
+          overflow: hidden;
+        }
+
+        #bgVideo {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          z-index: 0;
+          filter: brightness(0.45) saturate(0.8);
+        }
+
+        .overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.35) 0%,
+            rgba(0,0,0,0.55) 50%,
+            rgba(0,0,0,0.80) 100%
+          );
+          z-index: 1;
+        }
+
+        .hero-content {
+          position: relative;
+          z-index: 2;
+          max-width: 900px;
+        }
+
+        nav {
           position: fixed;
           top: 0;
           left: 0;
@@ -26,488 +63,169 @@ export default function HomePage() {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 16px 40px;
-          background: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent);
-          border-bottom: 1px solid rgba(204,0,0,0.15);
+          padding: 20px 40px;
+          background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
         }
 
-        .rfp-nav-logo {
-          display: flex;
-          align-items: center;
-        }
-
-        .rfp-nav-logo img {
-          height: 52px;
+        .nav-logo img {
+          height: 40px;
           width: auto;
-          filter: drop-shadow(0 2px 8px rgba(204,0,0,0.5));
+          display: block;
         }
 
-        .rfp-nav-links {
+        .nav-links {
           display: flex;
-          gap: 36px;
+          gap: 32px;
           list-style: none;
         }
 
-        .rfp-nav-links a {
-          color: rgba(255,255,255,0.8);
+        .nav-links a {
+          color: rgba(255,255,255,0.75);
           text-decoration: none;
           font-size: 13px;
-          font-weight: 700;
-          letter-spacing: 0.1em;
+          font-weight: 600;
+          letter-spacing: 0.06em;
           text-transform: uppercase;
           transition: color 0.2s;
         }
 
-        .rfp-nav-links a:hover { color: #CC0000; }
+        .nav-links a:hover { color: #c9a84c; }
 
-        .rfp-nav-cta {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          background: #CC0000;
-          color: #fff;
-          text-decoration: none;
-          font-size: 12px;
-          font-weight: 800;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          padding: 10px 22px;
-          border-radius: 3px;
-          transition: background 0.2s, transform 0.2s;
-        }
-
-        .rfp-nav-cta:hover { background: #aa0000; transform: translateY(-1px); }
-
-        /* ── HERO ───────────────────────────────── */
-        .rfp-hero {
-          position: relative;
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          padding: 120px 24px 80px;
-          overflow: hidden;
-        }
-
-        #rfpBgVideo {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          z-index: 0;
-          filter: brightness(0.3) saturate(0.7);
-        }
-
-        .rfp-overlay {
-          position: absolute;
-          inset: 0;
-          background:
-            linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.75) 100%),
-            radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.5) 100%);
-          z-index: 1;
-        }
-
-        /* red accent lines top-left */
-        .rfp-overlay::before {
-          content: '';
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 6px;
-          height: 100%;
-          background: #CC0000;
-          box-shadow: 0 0 40px rgba(204,0,0,0.8);
-        }
-
-        .rfp-hero-content {
-          position: relative;
-          z-index: 2;
-          max-width: 860px;
-        }
-
-        .rfp-badge {
+        .eyebrow {
           display: inline-block;
-          font-size: 11px;
-          font-weight: 800;
-          letter-spacing: 0.3em;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.25em;
           text-transform: uppercase;
-          color: #CC0000;
-          border: 1px solid rgba(204,0,0,0.5);
-          background: rgba(204,0,0,0.08);
-          padding: 7px 20px;
-          border-radius: 2px;
-          margin-bottom: 36px;
+          color: #c9a84c;
+          border: 1px solid rgba(201,168,76,0.4);
+          padding: 6px 18px;
+          border-radius: 100px;
+          margin-bottom: 28px;
         }
 
-        .rfp-logo-hero {
-          width: min(480px, 85vw);
-          height: auto;
-          margin-bottom: 32px;
-          filter: drop-shadow(0 4px 24px rgba(204,0,0,0.4));
+        .hero-logo {
+          height: 110px;
+          width: auto;
+          display: block;
+          margin: 0 auto 24px;
+          filter: drop-shadow(0 8px 32px rgba(201,168,76,0.35));
         }
 
-        .rfp-tagline {
-          font-size: clamp(16px, 2.5vw, 24px);
-          font-weight: 600;
-          letter-spacing: 0.2em;
+        .hero h1 {
+          font-size: clamp(52px, 9vw, 110px);
+          font-weight: 900;
+          line-height: 0.95;
+          letter-spacing: -0.02em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.7);
+          color: #fff;
+          margin-bottom: 12px;
+        }
+
+        .hero h1 .accent { color: #c9a84c; }
+
+        .sub-headline {
+          font-size: clamp(20px, 3.5vw, 36px);
+          font-weight: 700;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.65);
           margin-bottom: 48px;
         }
 
-        .rfp-tagline span {
-          color: #CC0000;
-        }
-
-        /* ── BUTTONS ────────────────────────────── */
-        .rfp-cta-group {
+        .cta-group {
           display: flex;
           flex-wrap: wrap;
-          gap: 14px;
+          gap: 16px;
           justify-content: center;
           align-items: center;
         }
 
-        .rfp-btn {
+        .btn {
           display: inline-flex;
           align-items: center;
           gap: 10px;
           font-size: 13px;
           font-weight: 800;
-          letter-spacing: 0.12em;
+          letter-spacing: 0.1em;
           text-transform: uppercase;
           text-decoration: none;
           padding: 18px 36px;
-          border-radius: 3px;
+          border-radius: 4px;
           transition: all 0.2s;
           cursor: pointer;
           border: none;
         }
 
-        .rfp-btn-primary {
-          background: #CC0000;
-          color: #fff;
-          box-shadow: 0 0 24px rgba(204,0,0,0.4);
+        .btn-primary {
+          background: #c9a84c;
+          color: #000;
         }
 
-        .rfp-btn-primary:hover {
-          background: #aa0000;
+        .btn-primary:hover {
+          background: #e0be6a;
           transform: translateY(-2px);
-          box-shadow: 0 4px 32px rgba(204,0,0,0.6);
         }
 
-        .rfp-btn-secondary {
+        .btn-secondary {
           background: transparent;
           color: #fff;
-          border: 2px solid rgba(255,255,255,0.4);
+          border: 2px solid rgba(255,255,255,0.5);
         }
 
-        .rfp-btn-secondary:hover {
+        .btn-secondary:hover {
           border-color: #fff;
           background: rgba(255,255,255,0.08);
           transform: translateY(-2px);
         }
 
-        .rfp-btn-outline-red {
-          background: transparent;
-          color: #CC0000;
-          border: 2px solid rgba(204,0,0,0.6);
+        .btn-stream {
+          background: rgba(201,168,76,0.12);
+          color: #c9a84c;
+          border: 2px solid rgba(201,168,76,0.5);
         }
 
-        .rfp-btn-outline-red:hover {
-          background: rgba(204,0,0,0.1);
-          border-color: #CC0000;
+        .btn-stream:hover {
+          background: rgba(201,168,76,0.2);
+          border-color: #c9a84c;
           transform: translateY(-2px);
         }
 
-        .rfp-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+        .btn svg { width: 16px; height: 16px; }
 
-        /* ── STATS STRIP ────────────────────────── */
-        .rfp-stats {
+        .stats {
           position: relative;
           z-index: 2;
           display: flex;
           justify-content: center;
-          gap: 0;
-          background: rgba(0,0,0,0.85);
-          border-top: 3px solid #CC0000;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
+          gap: 64px;
+          padding: 32px 40px;
+          background: rgba(0,0,0,0.55);
+          border-top: 1px solid rgba(201,168,76,0.2);
           flex-wrap: wrap;
         }
 
-        .rfp-stat {
-          text-align: center;
-          padding: 28px 48px;
-          flex: 1;
-          min-width: 140px;
-          border-right: 1px solid rgba(255,255,255,0.07);
-        }
+        .stat { text-align: center; }
 
-        .rfp-stat:last-child { border-right: none; }
-
-        .rfp-stat-number {
-          font-size: 36px;
-          font-weight: 900;
-          color: #CC0000;
-          line-height: 1;
-          letter-spacing: -1px;
-        }
-
-        .rfp-stat-label {
-          font-size: 11px;
-          font-weight: 700;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.4);
-          margin-top: 8px;
-        }
-
-        /* ── FEATURES SECTION ───────────────────── */
-        .rfp-features {
-          background: #0a0a0a;
-          padding: 100px 40px;
-          position: relative;
-        }
-
-        .rfp-features::before {
-          content: '';
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 6px;
-          height: 100%;
-          background: linear-gradient(to bottom, #CC0000, transparent);
-        }
-
-        .rfp-section-label {
-          font-size: 11px;
-          font-weight: 800;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          color: #CC0000;
-          text-align: center;
-          margin-bottom: 16px;
-        }
-
-        .rfp-section-title {
-          font-size: clamp(28px, 4vw, 48px);
-          font-weight: 900;
-          text-align: center;
-          color: #fff;
-          margin-bottom: 64px;
-          letter-spacing: -0.5px;
-        }
-
-        .rfp-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 24px;
-          max-width: 1100px;
-          margin: 0 auto;
-        }
-
-        .rfp-card {
-          background: #111;
-          border: 1px solid rgba(255,255,255,0.07);
-          border-top: 3px solid #CC0000;
-          border-radius: 4px;
-          padding: 36px 32px;
-          transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .rfp-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 12px 40px rgba(204,0,0,0.15);
-        }
-
-        .rfp-card-icon {
+        .stat-number {
           font-size: 32px;
-          margin-bottom: 16px;
-        }
-
-        .rfp-card-title {
-          font-size: 18px;
-          font-weight: 800;
-          color: #fff;
-          margin-bottom: 12px;
-          letter-spacing: 0.02em;
-        }
-
-        .rfp-card-body {
-          font-size: 14px;
-          color: rgba(255,255,255,0.55);
-          line-height: 1.7;
-        }
-
-        /* ── CTA SECTION ────────────────────────── */
-        .rfp-cta-section {
-          background: #CC0000;
-          padding: 80px 40px;
-          text-align: center;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .rfp-cta-section::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: repeating-linear-gradient(
-            -45deg,
-            transparent,
-            transparent 20px,
-            rgba(0,0,0,0.04) 20px,
-            rgba(0,0,0,0.04) 40px
-          );
-        }
-
-        .rfp-cta-section h2 {
-          position: relative;
-          font-size: clamp(28px, 4vw, 48px);
           font-weight: 900;
-          color: #fff;
-          margin-bottom: 16px;
-          letter-spacing: -0.5px;
+          color: #c9a84c;
+          line-height: 1;
         }
 
-        .rfp-cta-section p {
-          position: relative;
-          font-size: 16px;
-          color: rgba(255,255,255,0.8);
-          margin-bottom: 40px;
-          max-width: 500px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        .rfp-btn-dark {
-          position: relative;
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          background: #000;
-          color: #fff;
-          text-decoration: none;
-          font-size: 14px;
-          font-weight: 800;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          padding: 18px 42px;
-          border-radius: 3px;
-          transition: all 0.2s;
-        }
-
-        .rfp-btn-dark:hover {
-          background: #111;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-        }
-
-        /* ── PARTNERS BANNER ────────────────────── */
-        .rfp-partners {
-          position: relative;
-          background: #000;
-          overflow: hidden;
-        }
-
-        .rfp-partners-bg {
-          position: absolute;
-          inset: 0;
-          background-image: url('/partners-bg.jpg');
-          background-size: cover;
-          background-position: center 30%;
-          opacity: 0.25;
-        }
-
-        .rfp-partners-inner {
-          position: relative;
-          z-index: 1;
-          padding: 48px 40px 52px;
-          text-align: center;
-        }
-
-        .rfp-partners-title {
-          display: inline-block;
-          background: #000;
-          color: #fff;
-          font-size: clamp(20px, 3vw, 28px);
-          font-weight: 900;
-          letter-spacing: 0.04em;
-          text-transform: uppercase;
-          padding: 12px 40px;
-          border-radius: 50px;
-          margin-bottom: 36px;
-        }
-
-        .rfp-partners-logos {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-          gap: 32px 48px;
-        }
-
-        .rfp-partner-logo {
-          height: 80px;
-          width: auto;
-          max-width: 140px;
-          object-fit: contain;
-          filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
-          transition: transform 0.2s, filter 0.2s;
-        }
-
-        .rfp-partner-logo:hover {
-          transform: scale(1.08);
-          filter: drop-shadow(0 4px 16px rgba(204,0,0,0.4));
-        }
-
-        /* ── FOOTER ─────────────────────────────── */
-        .rfp-footer {
-          background: #0a0a0a;
-          border-top: 1px solid rgba(255,255,255,0.08);
-          padding: 24px 40px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          flex-wrap: wrap;
-          gap: 12px;
-        }
-
-        .rfp-footer-links {
-          display: flex;
-          gap: 24px;
-          list-style: none;
-        }
-
-        .rfp-footer-links a {
-          color: rgba(255,255,255,0.4);
-          text-decoration: none;
-          font-size: 12px;
+        .stat-label {
+          font-size: 11px;
           font-weight: 600;
-          letter-spacing: 0.08em;
+          letter-spacing: 0.15em;
           text-transform: uppercase;
-          transition: color 0.2s;
+          color: rgba(255,255,255,0.45);
+          margin-top: 6px;
         }
 
-        .rfp-footer-links a:hover { color: #CC0000; }
-
-        .rfp-footer-copy {
-          font-size: 12px;
-          color: rgba(255,255,255,0.35);
-        }
-
-        .rfp-footer-contact {
-          font-size: 12px;
-          color: rgba(255,255,255,0.35);
-        }
-
-        /* ── SCROLL HINT ────────────────────────── */
-        .rfp-scroll {
+        .scroll-hint {
           position: absolute;
-          bottom: 36px;
+          bottom: 100px;
           left: 50%;
           transform: translateX(-50%);
           z-index: 2;
@@ -515,97 +233,85 @@ export default function HomePage() {
           flex-direction: column;
           align-items: center;
           gap: 8px;
-          animation: rfpBounce 2.2s ease-in-out infinite;
+          animation: bounce 2s infinite;
         }
 
-        .rfp-scroll span {
+        .scroll-hint span {
           font-size: 10px;
-          letter-spacing: 0.25em;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.35);
+          color: rgba(255,255,255,0.4);
         }
 
-        .rfp-scroll-arrow {
-          width: 18px;
-          height: 18px;
-          border-right: 2px solid rgba(204,0,0,0.6);
-          border-bottom: 2px solid rgba(204,0,0,0.6);
+        .scroll-arrow {
+          width: 20px;
+          height: 20px;
+          border-right: 2px solid rgba(255,255,255,0.3);
+          border-bottom: 2px solid rgba(255,255,255,0.3);
           transform: rotate(45deg);
         }
 
-        @keyframes rfpBounce {
+        @keyframes bounce {
           0%, 100% { transform: translateX(-50%) translateY(0); }
-          50% { transform: translateX(-50%) translateY(10px); }
+          50% { transform: translateX(-50%) translateY(8px); }
         }
 
-        /* ── RESPONSIVE ─────────────────────────── */
-        @media (max-width: 700px) {
-          .rfp-nav { padding: 14px 20px; }
-          .rfp-nav-links { display: none; }
-          .rfp-features { padding: 64px 24px; }
-          .rfp-stat { padding: 22px 24px; }
-          .rfp-footer { justify-content: center; text-align: center; }
-          .rfp-partners-inner { padding: 40px 20px; }
-          .rfp-partner-logo { height: 60px; }
-          .rfp-partners-logos { gap: 24px 32px; }
+        @media (max-width: 640px) {
+          nav { padding: 16px 20px; }
+          .nav-links { display: none; }
+          .stats { gap: 32px; padding: 24px 20px; }
         }
       `}</style>
 
-      {/* ── NAV ── */}
-      <nav className="rfp-nav">
-        <div className="rfp-nav-logo">
-          <img src="/logo.png" alt="Real Fight Promotions" />
+      {/* Nav */}
+      <nav>
+        <div className="nav-logo">
+          <a href="/"><img src="/logo.jpg" alt="Real Fight Promotions" /></a>
         </div>
-        <ul className="rfp-nav-links">
+        <ul className="nav-links">
           <li><a href="/people">Fighters</a></li>
           <li><a href="https://ta.realpromo.io/events">Events</a></li>
           <li><a href="/match">Matchmaking</a></li>
           <li><a href="https://ta.realpromo.io/events">Stream</a></li>
+          <li><a href="/auth/sign-in">Sign In</a></li>
         </ul>
-        <a href="/auth/sign-in" className="rfp-nav-cta">
-          Sign In
-        </a>
       </nav>
 
-      {/* ── HERO ── */}
-      <section className="rfp-hero">
-        <video id="rfpBgVideo" autoPlay muted loop playsInline>
+      {/* Hero */}
+      <section className="hero">
+        <video id="bgVideo" autoPlay muted loop playsInline>
           <source src="/bg-video.mp4" type="video/mp4" />
         </video>
-        <div className="rfp-overlay" />
+        <div className="overlay" />
 
-        <div className="rfp-hero-content">
-          <div className="rfp-badge">▲ Combat Sports Platform</div>
+        <div className="hero-content">
+          <img src="/logo.jpg" alt="Real Fight Promotions" className="hero-logo" />
+          <div className="eyebrow">▲ Combat Sports Platform</div>
 
-          <img
-            src="/logo.png"
-            alt="Real Fight Promotions"
-            className="rfp-logo-hero"
-          />
+          <h1>Real <span className="accent">Fight</span><br />Promotion</h1>
 
-          <p className="rfp-tagline">
-            We Help <span>Real</span> Fighters
-          </p>
+          <p className="sub-headline">We Help Real Fighters</p>
 
-          <div className="rfp-cta-group">
-            <a href="/auth/sign-up" className="rfp-btn rfp-btn-primary">
+          <div className="cta-group">
+            {/* Matchmaking CTA → sign up */}
+            <a href="/auth/sign-up" className="btn btn-primary">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
               </svg>
               Enter Combat Sports Draft
             </a>
 
-            <a href="https://realfightpromo.com" target="_blank" rel="noopener noreferrer" className="rfp-btn rfp-btn-secondary">
+            {/* Get Tickets */}
+            <a href="https://ta.realpromo.io/events" className="btn btn-secondary">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
               </svg>
               Get Tickets
             </a>
 
-            <a href="https://realfightpromo.com" target="_blank" rel="noopener noreferrer" className="rfp-btn rfp-btn-outline-red">
+            {/* Watch Stream */}
+            <a href="https://ta.realpromo.io/events" className="btn btn-stream">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="5 3 19 12 5 21 5 3"/>
               </svg>
@@ -614,122 +320,31 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="rfp-scroll">
+        <div className="scroll-hint">
           <span>Scroll</span>
-          <div className="rfp-scroll-arrow" />
+          <div className="scroll-arrow" />
         </div>
       </section>
 
-      {/* ── STATS STRIP ── */}
-      <div className="rfp-stats">
-        <div className="rfp-stat">
-          <div className="rfp-stat-number">100+</div>
-          <div className="rfp-stat-label">Fighters</div>
+      {/* Stats strip */}
+      <div className="stats">
+        <div className="stat">
+          <div className="stat-number">100</div>
+          <div className="stat-label">Fighters</div>
         </div>
-        <div className="rfp-stat">
-          <div className="rfp-stat-number">20</div>
-          <div className="rfp-stat-label">Events</div>
+        <div className="stat">
+          <div className="stat-number">20</div>
+          <div className="stat-label">Events</div>
         </div>
-        <div className="rfp-stat">
-          <div className="rfp-stat-number">7</div>
-          <div className="rfp-stat-label">Promotions</div>
+        <div className="stat">
+          <div className="stat-number">7</div>
+          <div className="stat-label">Promotions</div>
         </div>
-        <div className="rfp-stat">
-          <div className="rfp-stat-number">50K</div>
-          <div className="rfp-stat-label">Fans</div>
+        <div className="stat">
+          <div className="stat-number">50,000</div>
+          <div className="stat-label">Fans</div>
         </div>
       </div>
-
-      {/* ── FEATURES ── */}
-      <section className="rfp-features">
-        <div className="rfp-section-label">What We Offer</div>
-        <h2 className="rfp-section-title">Built for the Fight Game</h2>
-
-        <div className="rfp-grid">
-          <div className="rfp-card">
-            <div className="rfp-card-icon">📋</div>
-            <h3 className="rfp-card-title">The Fight Board</h3>
-            <p className="rfp-card-body">
-              Old-school community board meets AI agent. Post what you need, browse who's out there — then let the AI cut through the noise and put the right people in front of you. No more cold calls. No more dead ends.
-            </p>
-          </div>
-
-          <div className="rfp-card">
-            <div className="rfp-card-icon">🎟️</div>
-            <h3 className="rfp-card-title">Event Ticketing</h3>
-            <p className="rfp-card-body">
-              Buy tickets for upcoming fight cards, access live streams, and follow your favorite fighters — all in one place.
-            </p>
-          </div>
-
-          <div className="rfp-card">
-            <div className="rfp-card-icon">👥</div>
-            <h3 className="rfp-card-title">Fighter Network</h3>
-            <p className="rfp-card-body">
-              Connect with fighters, coaches, managers, and promoters across the country. Every profile, every role — the full combat sports ecosystem.
-            </p>
-          </div>
-
-          <div className="rfp-card">
-            <div className="rfp-card-icon">📋</div>
-            <h3 className="rfp-card-title">Promoter Tools</h3>
-            <p className="rfp-card-body">
-              Manage events, scan tickets at the door, send branded confirmation emails, and track gate revenue — purpose-built for regional promotions.
-            </p>
-          </div>
-
-          <div className="rfp-card">
-            <div className="rfp-card-icon">🏆</div>
-            <h3 className="rfp-card-title">Fighter Profiles</h3>
-            <p className="rfp-card-body">
-              Build a professional fighter profile — record, weight class, reach, stance, availability, and highlights. Your digital fight card.
-            </p>
-          </div>
-
-          <div className="rfp-card">
-            <div className="rfp-card-icon">⚡</div>
-            <h3 className="rfp-card-title">Live Community Feed</h3>
-            <p className="rfp-card-body">
-              Follow the latest from fighters, trainers, and promoters in your area. Post updates, share results, and stay connected to the scene.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── BOTTOM CTA ── */}
-      <div className="rfp-cta-section">
-        <h2>Ready to Enter the Draft?</h2>
-        <p>Join the platform that connects every corner of the combat sports world.</p>
-        <a href="/auth/sign-up" className="rfp-btn-dark">
-          Create Your Free Profile →
-        </a>
-      </div>
-
-      {/* ── PARTNERS BANNER ── */}
-      <section className="rfp-partners">
-        <div className="rfp-partners-bg" />
-        <div className="rfp-partners-inner">
-          <div className="rfp-partners-title">Promotions in The Community</div>
-          <div className="rfp-partners-logos">
-            <img src="/logos/kamp-green.png"      alt="Kamp Green"            className="rfp-partner-logo" />
-            <img src="/logos/made-men.png"         alt="Made Men"              className="rfp-partner-logo" />
-            <img src="/logos/rcs2.png"             alt="Regal Combat Sports"   className="rfp-partner-logo" />
-            <img src="/logos/real-fight-promo.png" alt="Real Fight Promotions" className="rfp-partner-logo" />
-            <img src="/logos/247-fighting.png"     alt="24/7 Fighting"         className="rfp-partner-logo" />
-            <img src="/logos/toughman.png"         alt="Toughman Contest"      className="rfp-partner-logo" />
-          </div>
-        </div>
-      </section>
-
-      {/* ── FOOTER ── */}
-      <footer className="rfp-footer">
-        <span className="rfp-footer-copy">Copyright 2026 | Real Fight Promotion</span>
-        <ul className="rfp-footer-links">
-          <li><a href="#">Terms &amp; Conditions</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-        </ul>
-        <span className="rfp-footer-contact">Morgantown, WV · info@realpromo.io</span>
-      </footer>
     </>
   )
 }
