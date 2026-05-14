@@ -321,7 +321,7 @@ export default function HomePage() {
       {/* Hero */}
       <section className="hero">
         <video id="bgVideo" autoPlay muted loop playsInline>
-          <source src="/background.mp4" type="video/mp4" />
+          <source src="https://ta.realpromo.io/background.mp4" type="video/mp4" />
         </video>
         <div className="overlay" />
 
