@@ -314,6 +314,7 @@ export default function HomePage() {
           <li><a href="https://ta.realpromo.io/events">Events</a></li>
           <li><a href="/match">Matchmaking</a></li>
           <li><a href="https://ta.realpromo.io/events">Stream</a></li>
+          <li><a href="/blog">Blog</a></li>
           <li><a href="/auth/sign-in" className="sign-in">Sign In</a></li>
         </ul>
       </nav>
