@@ -46,15 +46,15 @@ export default function HomePage() {
           text-transform: uppercase;
           transition: color 0.2s;
         }
-        .nav-links a:hover { color: #c9a84c; }
+        .nav-links a:hover { color: #ef4444; }
 
         .nav-links .sign-in {
           padding: 8px 20px;
-          border: 1px solid rgba(201,168,76,0.4);
+          border: 1px solid rgba(220,38,38,0.4);
           border-radius: 6px;
-          color: #c9a84c !important;
+          color: #ef4444 !important;
         }
-        .nav-links .sign-in:hover { background: rgba(201,168,76,0.1); }
+        .nav-links .sign-in:hover { background: rgba(220,38,38,0.1); }
 
         /* ── Hero ── */
         .hero {
@@ -96,7 +96,7 @@ export default function HomePage() {
           width: auto;
           display: block;
           margin: 0 auto 20px;
-          filter: drop-shadow(0 6px 24px rgba(201,168,76,0.4));
+          filter: drop-shadow(0 6px 24px rgba(220,38,38,0.4));
         }
 
         .eyebrow {
@@ -105,8 +105,8 @@ export default function HomePage() {
           font-weight: 700;
           letter-spacing: 0.25em;
           text-transform: uppercase;
-          color: #c9a84c;
-          border: 1px solid rgba(201,168,76,0.4);
+          color: #dc2626;
+          border: 1px solid rgba(220,38,38,0.4);
           padding: 6px 18px;
           border-radius: 100px;
           margin-bottom: 28px;
@@ -121,7 +121,7 @@ export default function HomePage() {
           color: #fff;
           margin-bottom: 12px;
         }
-        .hero h1 .accent { color: #c9a84c; }
+        .hero h1 .accent { color: #dc2626; }
 
         .sub-headline {
           font-size: clamp(18px, 3vw, 32px);
@@ -157,14 +157,14 @@ export default function HomePage() {
         }
         .btn svg { width: 16px; height: 16px; }
 
-        .btn-primary { background: #c9a84c; color: #000; }
-        .btn-primary:hover { background: #e0be6a; transform: translateY(-2px); }
+        .btn-primary { background: #dc2626; color: #fff; }
+        .btn-primary:hover { background: #b91c1c; transform: translateY(-2px); }
 
         .btn-secondary { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.5); }
         .btn-secondary:hover { border-color: #fff; background: rgba(255,255,255,0.08); transform: translateY(-2px); }
 
-        .btn-stream { background: rgba(201,168,76,0.12); color: #c9a84c; border: 2px solid rgba(201,168,76,0.5); }
-        .btn-stream:hover { background: rgba(201,168,76,0.2); border-color: #c9a84c; transform: translateY(-2px); }
+        .btn-stream { background: rgba(220,38,38,0.12); color: #ef4444; border: 2px solid rgba(220,38,38,0.5); }
+        .btn-stream:hover { background: rgba(220,38,38,0.2); border-color: #dc2626; transform: translateY(-2px); }
 
         .scroll-hint {
           position: absolute;
@@ -193,11 +193,11 @@ export default function HomePage() {
           gap: 64px;
           padding: 32px 40px;
           background: rgba(0,0,0,0.85);
-          border-top: 1px solid rgba(201,168,76,0.2);
+          border-top: 1px solid rgba(220,38,38,0.2);
           flex-wrap: wrap;
         }
         .stat { text-align: center; }
-        .stat-number { font-size: 32px; font-weight: 900; color: #c9a84c; line-height: 1; }
+        .stat-number { font-size: 32px; font-weight: 900; color: #dc2626; line-height: 1; }
         .stat-label { font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-top: 6px; }
 
         /* ── Features section ── */
@@ -213,7 +213,7 @@ export default function HomePage() {
           letter-spacing: -0.01em;
           margin-bottom: 56px;
         }
-        .features-section h2 .accent { color: #c9a84c; }
+        .features-section h2 .accent { color: #dc2626; }
 
         .features-grid {
           display: grid;
@@ -230,7 +230,7 @@ export default function HomePage() {
           padding: 32px;
           transition: border-color 0.2s, background 0.2s;
         }
-        .feature-card:hover { border-color: rgba(201,168,76,0.3); background: rgba(201,168,76,0.04); }
+        .feature-card:hover { border-color: rgba(220,38,38,0.3); background: rgba(220,38,38,0.04); }
 
         .feature-icon { font-size: 28px; margin-bottom: 16px; }
         .feature-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
@@ -240,9 +240,9 @@ export default function HomePage() {
         .cta-band {
           padding: 80px 40px;
           text-align: center;
-          background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(0,0,0,0) 100%);
-          border-top: 1px solid rgba(201,168,76,0.15);
-          border-bottom: 1px solid rgba(201,168,76,0.15);
+          background: linear-gradient(135deg, rgba(220,38,38,0.08) 0%, rgba(0,0,0,0) 100%);
+          border-top: 1px solid rgba(220,38,38,0.15);
+          border-bottom: 1px solid rgba(220,38,38,0.15);
         }
         .cta-band h2 { font-size: clamp(26px, 4vw, 40px); font-weight: 900; margin-bottom: 12px; }
         .cta-band p { color: rgba(255,255,255,0.55); font-size: 16px; margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; }
@@ -274,11 +274,10 @@ export default function HomePage() {
         .promos-logos img {
           height: 48px;
           width: auto;
-          opacity: 0.55;
-          filter: grayscale(100%);
-          transition: opacity 0.2s, filter 0.2s;
+          opacity: 0.85;
+          transition: opacity 0.2s, transform 0.2s;
         }
-        .promos-logos img:hover { opacity: 0.9; filter: grayscale(0%); }
+        .promos-logos img:hover { opacity: 1; transform: scale(1.05); }
 
         /* ── Footer ── */
         footer {
