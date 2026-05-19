@@ -8,8 +8,7 @@ import { Toast } from '@/components/ui/toast'
 import { Chip } from '@/components/ui/chip'
 import type { UserRole } from '@/types/index'
 
-const TOTAL_STEPS = 6
-// VERIFICATION_STEP = 7 — re-enable when phone/selfie verification is implemented
+const TOTAL_STEPS = 7
 
 const ROLE_OPTIONS = [
   { value: 'fighter',    label: 'Fighter',          icon: '🥊' },
@@ -249,8 +248,12 @@ export default function OnboardingPage() {
 
   // ── finish ───────────────────────────────────────────────────
   const handleFinish = async () => {
-    // Phone + selfie verification removed from onboarding for now —
-    // re-enable when step 7 is brought back (set TOTAL_STEPS = 7)
+    if (!state.phoneNumber.trim()) {
+      setToast({ message: 'Phone number is required for verification', type: 'error' })
+      return
+    }
+    // selfie is strongly encouraged but not a hard blocker —
+    // accounts without one are flagged for manual review
 
     setIsLoading(true)
     try {
@@ -331,8 +334,32 @@ export default function OnboardingPage() {
       // Re-send email verification via Supabase
       await supabase.auth.resend({ type: 'signup', email: user.email! })
 
+      // ── Fire GHL onboarding webhook ──────────────────────────────────────
+      try {
+        await fetch('https://services.leadconnectorhq.com/hooks/xw60rwbVDDS9Gb8W1BrT/webhook-trigger/424aaebf-f62e-4793-b741-96155528791b', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: user.email,
+            phone: state.phoneNumber || null,
+            name: state.displayName,
+            city: state.city || null,
+            state: state.stateRegion || null,
+            country: state.country || 'USA',
+            role: primaryRole,
+            secondary_roles: secondaryRoles,
+            gym_affiliation: state.gymAffiliation || null,
+            organization: state.organization || null,
+            looking_for: state.lookingFor,
+            source: 'realpromo_onboarding',
+          }),
+        })
+      } catch (_) {
+        // Webhook failure is non-fatal — profile is already saved
+      }
+
       setToast({ message: 'Profile saved! Check your email to verify your account.', type: 'success' })
-      setTimeout(() => router.push('/home'), 2000)
+      setTimeout(() => { window.location.href = 'https://watch.realfightpromo.com' }, 2000)
     } catch (err: any) {
       setToast({ message: err.message || 'Failed to save profile', type: 'error' })
     } finally {
@@ -678,9 +705,10 @@ export default function OnboardingPage() {
             </div>
           )}
 
-          {/* ── STEP 7: Verification — DISABLED for now, re-enable by setting TOTAL_STEPS = 7 ──
+          {/* ── STEP 7: Verification ── */}
           {step === 7 && (
             <div className="space-y-6">
+              {/* Selfie */}
               <div>
                 <h3 className="text-sm font-bold text-text-primary mb-1">
                   Verification Selfie <span className="text-fight-red">*</span>
@@ -690,6 +718,7 @@ export default function OnboardingPage() {
                   <strong>completely private</strong> — it will never be shown to other members or appear on
                   your profile. It's used only to verify your identity.
                 </p>
+
                 <input
                   ref={selfieInputRef}
                   type="file"
@@ -708,6 +737,8 @@ export default function OnboardingPage() {
                   isPrivate
                 />
               </div>
+
+              {/* Phone */}
               <div>
                 <h3 className="text-sm font-bold text-text-primary mb-1">
                   Phone Number <span className="text-fight-red">*</span>
@@ -715,6 +746,7 @@ export default function OnboardingPage() {
                 <p className="text-xs text-text-muted mb-3">
                   We'll send a one-time verification code to confirm your number.
                 </p>
+
                 <div className="flex gap-2">
                   <input
                     type="tel"
@@ -731,6 +763,7 @@ export default function OnboardingPage() {
                     Send Code
                   </button>
                 </div>
+
                 {smsSent && (
                   <div className="mt-3">
                     <label className="block text-xs font-semibold text-text-muted mb-1">
@@ -747,6 +780,8 @@ export default function OnboardingPage() {
                   </div>
                 )}
               </div>
+
+              {/* What happens next */}
               <div className="bg-gray-50 rounded-xl p-4 text-xs text-text-muted space-y-1.5 leading-relaxed">
                 <p className="font-semibold text-text-primary">After you submit:</p>
                 <p>📧 We'll send a verification link to your email address.</p>
@@ -755,7 +790,6 @@ export default function OnboardingPage() {
               </div>
             </div>
           )}
-          ── END STEP 7 ── */}
         </div>
 
         {/* Navigation */}
