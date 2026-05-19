@@ -8,7 +8,7 @@ import { Toast } from '@/components/ui/toast'
 import { Chip } from '@/components/ui/chip'
 import type { UserRole } from '@/types/index'
 
-const TOTAL_STEPS = 7
+const TOTAL_STEPS = 6
 
 const ROLE_OPTIONS = [
   { value: 'fighter',    label: 'Fighter',          icon: '🥊' },
@@ -67,7 +67,6 @@ const STEP_TITLES = [
   'Registry & Profile Links',
   'Social Media',
   'Location & Affiliations',
-  'Verification',
 ]
 
 interface OnboardingState {
@@ -248,13 +247,6 @@ export default function OnboardingPage() {
 
   // ── finish ───────────────────────────────────────────────────
   const handleFinish = async () => {
-    if (!state.phoneNumber.trim()) {
-      setToast({ message: 'Phone number is required for verification', type: 'error' })
-      return
-    }
-    // selfie is strongly encouraged but not a hard blocker —
-    // accounts without one are flagged for manual review
-
     setIsLoading(true)
     try {
       const { data: { user } } = await supabase.auth.getUser()
@@ -283,12 +275,6 @@ export default function OnboardingPage() {
         other: state.otherRegistryUrl || null,
       }
 
-      // Save to users table
-      // NOTE: social_links, registry_links, phone_number, selfie_path need a DB migration
-      // Run: ALTER TABLE public.users ADD COLUMN IF NOT EXISTS social_links jsonb;
-      //       ALTER TABLE public.users ADD COLUMN IF NOT EXISTS registry_links jsonb;
-      //       ALTER TABLE public.users ADD COLUMN IF NOT EXISTS phone_number text;
-      //       ALTER TABLE public.users ADD COLUMN IF NOT EXISTS selfie_path text;
       const { error: userError } = await supabase.from('users').upsert({
         id: user.id,
         display_name: state.displayName || user.email?.split('@')[0] || 'Member',
@@ -304,7 +290,6 @@ export default function OnboardingPage() {
         gym_affiliation: state.gymAffiliation || null,
         is_profile_complete: true,
         updated_at: new Date().toISOString(),
-        // New columns (require migration — safe to send, Supabase ignores unknown cols)
         social_links: socialLinks,
         registry_links: registryLinks,
         phone_number: state.phoneNumber || null,
@@ -312,7 +297,6 @@ export default function OnboardingPage() {
       })
 
       if (userError) {
-        // Re-try without new columns in case migration hasn't run yet
         const { error: retryError } = await supabase.from('users').upsert({
           id: user.id,
           display_name: state.displayName || user.email?.split('@')[0] || 'Member',
@@ -705,91 +689,6 @@ export default function OnboardingPage() {
             </div>
           )}
 
-          {/* ── STEP 7: Verification ── */}
-          {step === 7 && (
-            <div className="space-y-6">
-              {/* Selfie */}
-              <div>
-                <h3 className="text-sm font-bold text-text-primary mb-1">
-                  Verification Selfie <span className="text-fight-red">*</span>
-                </h3>
-                <p className="text-xs text-text-muted mb-4 leading-relaxed">
-                  To confirm you're a real person, please upload a quick selfie. This photo is{' '}
-                  <strong>completely private</strong> — it will never be shown to other members or appear on
-                  your profile. It's used only to verify your identity.
-                </p>
-
-                <input
-                  ref={selfieInputRef}
-                  type="file"
-                  accept="image/*"
-                  capture="user"
-                  className="hidden"
-                  onChange={(e) => handlePhotoUpload(e, 'selfies', 'selfieUrl')}
-                />
-                <UploadBox
-                  label="Upload a selfie"
-                  sublabel="Take or upload a photo of yourself · PNG or JPG"
-                  icon="🤳"
-                  url={state.selfieUrl}
-                  onClick={() => selfieInputRef.current?.click()}
-                  loading={isLoading}
-                  isPrivate
-                />
-              </div>
-
-              {/* Phone */}
-              <div>
-                <h3 className="text-sm font-bold text-text-primary mb-1">
-                  Phone Number <span className="text-fight-red">*</span>
-                </h3>
-                <p className="text-xs text-text-muted mb-3">
-                  We'll send a one-time verification code to confirm your number.
-                </p>
-
-                <div className="flex gap-2">
-                  <input
-                    type="tel"
-                    value={state.phoneNumber}
-                    onChange={(e) => update('phoneNumber', e.target.value)}
-                    placeholder="+1 (555) 000-0000"
-                    className={`${inputClass} flex-1`}
-                  />
-                  <button
-                    type="button"
-                    onClick={handleSendSms}
-                    className="px-4 py-3 bg-fight-red text-white rounded-xl font-semibold text-sm hover:bg-red-700 transition-colors whitespace-nowrap"
-                  >
-                    Send Code
-                  </button>
-                </div>
-
-                {smsSent && (
-                  <div className="mt-3">
-                    <label className="block text-xs font-semibold text-text-muted mb-1">
-                      Enter the code from your text message
-                    </label>
-                    <input
-                      type="text"
-                      value={state.verificationCode}
-                      onChange={(e) => update('verificationCode', e.target.value)}
-                      placeholder="000000"
-                      maxLength={6}
-                      className={`${inputClass} text-center text-2xl tracking-widest font-bold`}
-                    />
-                  </div>
-                )}
-              </div>
-
-              {/* What happens next */}
-              <div className="bg-gray-50 rounded-xl p-4 text-xs text-text-muted space-y-1.5 leading-relaxed">
-                <p className="font-semibold text-text-primary">After you submit:</p>
-                <p>📧 We'll send a verification link to your email address.</p>
-                <p>📱 We'll send a confirmation SMS to your phone.</p>
-                <p>🔒 Your selfie is encrypted and stored privately — never shared.</p>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Navigation */}
