@@ -1,4 +1,4 @@
-//  @ts-nocheck
+// @ts-nocheck
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
@@ -70,21 +70,16 @@ const STEP_TITLES = [
 ]
 
 interface OnboardingState {
-  // Step 1 — roles
   selectedRoles: string[]
   otherRoleText: string
-  // Step 2 — photo (optional)
   photoUrl: string | null
-  // Step 3 — about
   displayName: string
   shortBio: string
-  // Step 4 — registry links
   boxrecUrl: string
   tapologyUrl: string
   sherdogUrl: string
   mmaJunkieUrl: string
   otherRegistryUrl: string
-  // Step 5 — social media
   instagram: string
   twitter: string
   facebook: string
@@ -93,14 +88,12 @@ interface OnboardingState {
   linkedin: string
   snapchat: string
   website: string
-  // Step 6 — location + affiliations + looking for
   city: string
   stateRegion: string
   country: string
   gymAffiliation: string
   organization: string
   lookingFor: string[]
-  // Step 7 — verification
   phoneNumber: string
   selfieUrl: string | null
   verificationCode: string
@@ -164,7 +157,6 @@ export default function OnboardingPage() {
   const update = (key: keyof OnboardingState, value: any) =>
     setState((prev) => ({ ...prev, [key]: value }))
 
-  // ── role toggle ──────────────────────────────────────────────
   const toggleRole = (role: string) => {
     setState((prev) => ({
       ...prev,
@@ -174,7 +166,6 @@ export default function OnboardingPage() {
     }))
   }
 
-  // ── looking-for toggle ───────────────────────────────────────
   const toggleLookingFor = (item: string) => {
     setState((prev) => ({
       ...prev,
@@ -184,7 +175,6 @@ export default function OnboardingPage() {
     }))
   }
 
-  // ── photo upload ─────────────────────────────────────────────
   const handlePhotoUpload = async (
     e: React.ChangeEvent<HTMLInputElement>,
     bucket: 'avatars' | 'selfies',
@@ -192,33 +182,25 @@ export default function OnboardingPage() {
   ) => {
     const file = e.target.files?.[0]
     if (!file) return
-
-    // Basic size check (5MB)
     if (file.size > 5 * 1024 * 1024) {
       setToast({ message: 'File too large — max 5MB', type: 'error' })
       return
     }
-
     setIsLoading(true)
     try {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) throw new Error('Not signed in')
-
       const ext = file.name.split('.').pop() || 'jpg'
       const filePath = `${user.id}/${stateKey === 'selfieUrl' ? 'selfie' : 'avatar'}.${ext}`
-
       const { error: uploadError } = await supabase.storage
         .from(bucket)
         .upload(filePath, file, { upsert: true, contentType: file.type })
-
       if (uploadError) throw uploadError
-
       if (bucket === 'avatars') {
         const { data } = supabase.storage.from('avatars').getPublicUrl(filePath)
         update(stateKey, data.publicUrl)
         setToast({ message: 'Photo uploaded!', type: 'success' })
       } else {
-        // selfies bucket is private — just store the path, not a public URL
         update(stateKey, filePath)
         setToast({ message: 'Selfie uploaded securely ✓', type: 'success' })
       }
@@ -229,7 +211,6 @@ export default function OnboardingPage() {
     }
   }
 
-  // ── navigation ───────────────────────────────────────────────
   const handleNext = () => {
     if (step === 1 && state.selectedRoles.length === 0 && !state.otherRoleText.trim()) {
       setToast({ message: 'Please select at least one role', type: 'error' })
@@ -244,18 +225,15 @@ export default function OnboardingPage() {
 
   const handleBack = () => { if (step > 1) setStep(step - 1) }
 
-  // ── fake SMS send (replace with real Twilio/Supabase Phone Auth) ─
   const handleSendSms = async () => {
     if (!state.phoneNumber.trim()) {
       setToast({ message: 'Enter your phone number first', type: 'error' })
       return
     }
-    // TODO: integrate Twilio / Supabase Phone Auth here
     setSmsSent(true)
     setToast({ message: 'Verification code sent to your phone!', type: 'success' })
   }
 
-  // ── finish ───────────────────────────────────────────────────
   const handleFinish = async () => {
     setIsLoading(true)
     try {
@@ -265,7 +243,6 @@ export default function OnboardingPage() {
       const primaryRole = (state.selectedRoles[0] || 'fighter') as UserRole
       const secondaryRoles = state.selectedRoles.slice(1)
 
-      // Build social links as JSON for storage
       const socialLinks = {
         instagram: state.instagram || null,
         twitter: state.twitter || null,
@@ -285,7 +262,6 @@ export default function OnboardingPage() {
         other: state.otherRegistryUrl || null,
       }
 
-      // Save to users table
       const { error: userError } = await supabase.from('users').upsert({
         id: user.id,
         display_name: state.displayName || user.email?.split('@')[0] || 'Member',
@@ -308,7 +284,6 @@ export default function OnboardingPage() {
       })
 
       if (userError) {
-        // Re-try without new columns in case migration hasn't run yet
         const { error: retryError } = await supabase.from('users').upsert({
           id: user.id,
           display_name: state.displayName || user.email?.split('@')[0] || 'Member',
@@ -326,9 +301,6 @@ export default function OnboardingPage() {
         })
         if (retryError) throw retryError
       }
-
-      // Re-send email verification via Supabase
-      await supabase.auth.resend({ type: 'signup', email: user.email! })
 
       // ── Fire GHL onboarding webhook ──────────────────────────────────────
       try {
@@ -351,10 +323,10 @@ export default function OnboardingPage() {
           }),
         })
       } catch (_) {
-        // Webhook failure is non-fatal — profile is already saved
+        // Webhook failure is non-fatal
       }
 
-      setToast({ message: 'Profile saved! Check your email to verify your account.', type: 'success' })
+      setToast({ message: 'Profile saved! Redirecting...', type: 'success' })
       setTimeout(() => { window.location.href = 'https://watch.realfightpromo.com' }, 2000)
     } catch (err: any) {
       if (err.message === 'Not signed in') {
@@ -367,23 +339,11 @@ export default function OnboardingPage() {
     }
   }
 
-  // ── upload box helper ────────────────────────────────────────
   const UploadBox = ({
-    label,
-    sublabel,
-    icon,
-    url,
-    onClick,
-    loading,
-    isPrivate,
+    label, sublabel, icon, url, onClick, loading, isPrivate,
   }: {
-    label: string
-    sublabel: string
-    icon: string
-    url: string | null
-    onClick: () => void
-    loading?: boolean
-    isPrivate?: boolean
+    label: string; sublabel: string; icon: string; url: string | null
+    onClick: () => void; loading?: boolean; isPrivate?: boolean
   }) => (
     <button
       type="button"
@@ -394,11 +354,7 @@ export default function OnboardingPage() {
       {url ? (
         <div className="flex flex-col items-center gap-2">
           {!isPrivate && (
-            <img
-              src={url}
-              alt="Uploaded"
-              className="w-24 h-24 rounded-full object-cover border-4 border-fight-red"
-            />
+            <img src={url} alt="Uploaded" className="w-24 h-24 rounded-full object-cover border-4 border-fight-red" />
           )}
           <p className="text-sm font-semibold text-green-600">
             {isPrivate ? '✓ Selfie uploaded securely' : '✓ Photo uploaded'}
@@ -415,12 +371,10 @@ export default function OnboardingPage() {
     </button>
   )
 
-  // ── render ───────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-background-app">
       <div className="max-w-2xl mx-auto px-4 py-8 sm:py-12">
 
-        {/* Progress dots */}
         <div className="mb-8">
           <div className="flex justify-center gap-2 mb-6">
             {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
@@ -433,25 +387,16 @@ export default function OnboardingPage() {
             ))}
           </div>
           <div className="text-center">
-            <p className="text-sm font-semibold text-text-muted mb-1">
-              Step {step} of {TOTAL_STEPS}
-            </p>
-            <h1 className="text-2xl sm:text-3xl font-bold text-text-primary">
-              {STEP_TITLES[step - 1]}
-            </h1>
+            <p className="text-sm font-semibold text-text-muted mb-1">Step {step} of {TOTAL_STEPS}</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-text-primary">{STEP_TITLES[step - 1]}</h1>
           </div>
         </div>
 
-        {/* Card */}
         <div className="bg-white rounded-2xl shadow-sm border border-border-DEFAULT p-6 sm:p-8 mb-6">
 
-          {/* ── STEP 1: Roles ── */}
           {step === 1 && (
             <div className="space-y-6">
-              <p className="text-text-muted text-center text-sm">
-                Select all that apply — you can choose more than one.
-              </p>
-
+              <p className="text-text-muted text-center text-sm">Select all that apply — you can choose more than one.</p>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {ROLE_OPTIONS.map(({ value, label, icon }) => {
                   const selected = state.selectedRoles.includes(value)
@@ -461,26 +406,19 @@ export default function OnboardingPage() {
                       type="button"
                       onClick={() => toggleRole(value)}
                       className={`p-4 rounded-2xl border-2 transition-all duration-200 flex flex-col items-center gap-2 relative ${
-                        selected
-                          ? 'border-fight-red bg-red-50'
-                          : 'border-border-DEFAULT hover:border-fight-red bg-white'
+                        selected ? 'border-fight-red bg-red-50' : 'border-border-DEFAULT hover:border-fight-red bg-white'
                       }`}
                     >
-                      {selected && (
-                        <span className="absolute top-2 right-2 text-fight-red text-sm font-bold">✓</span>
-                      )}
+                      {selected && <span className="absolute top-2 right-2 text-fight-red text-sm font-bold">✓</span>}
                       <div className="text-3xl">{icon}</div>
                       <span className="text-sm font-semibold text-text-primary text-center">{label}</span>
                     </button>
                   )
                 })}
               </div>
-
-              {/* Other / free text */}
               <div className="pt-2">
                 <label className="block text-sm font-semibold text-text-primary mb-2">
-                  Other — describe what you do
-                  <span className="text-text-muted font-normal ml-1">(optional)</span>
+                  Other — describe what you do <span className="text-text-muted font-normal ml-1">(optional)</span>
                 </label>
                 <input
                   type="text"
@@ -493,20 +431,10 @@ export default function OnboardingPage() {
             </div>
           )}
 
-          {/* ── STEP 2: Photo (optional) ── */}
           {step === 2 && (
             <div className="space-y-5">
-              <p className="text-text-muted text-center text-sm">
-                Add a profile photo so people can recognize you. This is optional — you can skip it.
-              </p>
-
-              <input
-                ref={photoInputRef}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => handlePhotoUpload(e, 'avatars', 'photoUrl')}
-              />
+              <p className="text-text-muted text-center text-sm">Add a profile photo so people can recognize you. This is optional — you can skip it.</p>
+              <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => handlePhotoUpload(e, 'avatars', 'photoUrl')} />
               <UploadBox
                 label="Click to upload a photo"
                 sublabel="PNG or JPG · max 5 MB"
@@ -515,55 +443,26 @@ export default function OnboardingPage() {
                 onClick={() => photoInputRef.current?.click()}
                 loading={isLoading}
               />
-
-              <p className="text-xs text-text-muted text-center">
-                Your photo is public and visible to other members on your profile.
-              </p>
+              <p className="text-xs text-text-muted text-center">Your photo is public and visible to other members on your profile.</p>
             </div>
           )}
 
-          {/* ── STEP 3: About You ── */}
           {step === 3 && (
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-text-primary mb-2">
-                  Display Name <span className="text-fight-red">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={state.displayName}
-                  onChange={(e) => update('displayName', e.target.value)}
-                  placeholder="How you want to appear on the platform"
-                  className={inputClass}
-                />
+                <label className="block text-sm font-semibold text-text-primary mb-2">Display Name <span className="text-fight-red">*</span></label>
+                <input type="text" value={state.displayName} onChange={(e) => update('displayName', e.target.value)} placeholder="How you want to appear on the platform" className={inputClass} />
               </div>
-
               <div>
-                <label className="block text-sm font-semibold text-text-primary mb-2">
-                  Short Bio
-                  <span className="text-text-muted font-normal ml-1">
-                    ({state.shortBio.length}/500)
-                  </span>
-                </label>
-                <textarea
-                  value={state.shortBio}
-                  onChange={(e) => update('shortBio', e.target.value.slice(0, 500))}
-                  placeholder="Tell the community a bit about yourself — your background, experience, goals..."
-                  className={`${inputClass} resize-none`}
-                  rows={5}
-                />
+                <label className="block text-sm font-semibold text-text-primary mb-2">Short Bio <span className="text-text-muted font-normal ml-1">({state.shortBio.length}/500)</span></label>
+                <textarea value={state.shortBio} onChange={(e) => update('shortBio', e.target.value.slice(0, 500))} placeholder="Tell the community a bit about yourself — your background, experience, goals..." className={`${inputClass} resize-none`} rows={5} />
               </div>
             </div>
           )}
 
-          {/* ── STEP 4: Registry Links ── */}
           {step === 4 && (
             <div className="space-y-4">
-              <p className="text-text-muted text-center text-sm">
-                Link your public fighter, trainer, manager, or promoter profile from any combat sports registry.
-                All fields are optional.
-              </p>
-
+              <p className="text-text-muted text-center text-sm">Link your public fighter, trainer, manager, or promoter profile from any combat sports registry. All fields are optional.</p>
               {[
                 { key: 'boxrecUrl',        label: 'BoxRec',      placeholder: 'https://boxrec.com/en/record/...' },
                 { key: 'tapologyUrl',      label: 'Tapology',    placeholder: 'https://tapology.com/fightcenter/fighters/...' },
@@ -572,133 +471,63 @@ export default function OnboardingPage() {
                 { key: 'otherRegistryUrl', label: 'Other',       placeholder: 'Any other registry or profile URL...' },
               ].map(({ key, label, placeholder }) => (
                 <div key={key}>
-                  <label className="block text-sm font-semibold text-text-primary mb-2">
-                    {label}
-                  </label>
-                  <input
-                    type="url"
-                    value={(state as any)[key]}
-                    onChange={(e) => update(key as any, e.target.value)}
-                    placeholder={placeholder}
-                    className={inputClass}
-                  />
+                  <label className="block text-sm font-semibold text-text-primary mb-2">{label}</label>
+                  <input type="url" value={(state as any)[key]} onChange={(e) => update(key as any, e.target.value)} placeholder={placeholder} className={inputClass} />
                 </div>
               ))}
             </div>
           )}
 
-          {/* ── STEP 5: Social Media ── */}
           {step === 5 && (
             <div className="space-y-4">
-              <p className="text-text-muted text-center text-sm">
-                Add links to your social media profiles. All fields are optional.
-              </p>
-
+              <p className="text-text-muted text-center text-sm">Add links to your social media profiles. All fields are optional.</p>
               {SOCIAL_PLATFORMS.map(({ key, label, placeholder, icon }) => (
                 <div key={key}>
-                  <label className="block text-sm font-semibold text-text-primary mb-2">
-                    <span className="mr-1">{icon}</span> {label}
-                  </label>
-                  <input
-                    type="url"
-                    value={(state as any)[key]}
-                    onChange={(e) => update(key as any, e.target.value)}
-                    placeholder={placeholder}
-                    className={inputClass}
-                  />
+                  <label className="block text-sm font-semibold text-text-primary mb-2"><span className="mr-1">{icon}</span> {label}</label>
+                  <input type="url" value={(state as any)[key]} onChange={(e) => update(key as any, e.target.value)} placeholder={placeholder} className={inputClass} />
                 </div>
               ))}
             </div>
           )}
 
-          {/* ── STEP 6: Location + Affiliations + Looking For ── */}
           {step === 6 && (
             <div className="space-y-5">
-              {/* Location */}
               <div>
-                <h3 className="text-sm font-bold text-text-primary uppercase tracking-wide mb-3">
-                  Location
-                </h3>
+                <h3 className="text-sm font-bold text-text-primary uppercase tracking-wide mb-3">Location</h3>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-semibold text-text-muted mb-1">City</label>
-                    <input
-                      type="text"
-                      value={state.city}
-                      onChange={(e) => update('city', e.target.value)}
-                      placeholder="Las Vegas"
-                      className={inputClass}
-                    />
+                    <input type="text" value={state.city} onChange={(e) => update('city', e.target.value)} placeholder="Las Vegas" className={inputClass} />
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-text-muted mb-1">State / Region</label>
-                    <input
-                      type="text"
-                      value={state.stateRegion}
-                      onChange={(e) => update('stateRegion', e.target.value)}
-                      placeholder="NV"
-                      className={inputClass}
-                    />
+                    <input type="text" value={state.stateRegion} onChange={(e) => update('stateRegion', e.target.value)} placeholder="NV" className={inputClass} />
                   </div>
                 </div>
                 <div className="mt-3">
                   <label className="block text-xs font-semibold text-text-muted mb-1">Country</label>
-                  <input
-                    type="text"
-                    value={state.country}
-                    onChange={(e) => update('country', e.target.value)}
-                    className={inputClass}
-                  />
+                  <input type="text" value={state.country} onChange={(e) => update('country', e.target.value)} className={inputClass} />
                 </div>
               </div>
-
-              {/* Affiliations */}
               <div>
-                <h3 className="text-sm font-bold text-text-primary uppercase tracking-wide mb-3">
-                  Affiliations
-                </h3>
+                <h3 className="text-sm font-bold text-text-primary uppercase tracking-wide mb-3">Affiliations</h3>
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-xs font-semibold text-text-muted mb-1">
-                      Gym Affiliation
-                    </label>
-                    <input
-                      type="text"
-                      value={state.gymAffiliation}
-                      onChange={(e) => update('gymAffiliation', e.target.value)}
-                      placeholder="e.g. Tiger Muay Thai, AKA, Gleason's Gym..."
-                      className={inputClass}
-                    />
+                    <label className="block text-xs font-semibold text-text-muted mb-1">Gym Affiliation</label>
+                    <input type="text" value={state.gymAffiliation} onChange={(e) => update('gymAffiliation', e.target.value)} placeholder="e.g. Tiger Muay Thai, AKA, Gleason's Gym..." className={inputClass} />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-text-muted mb-1">
-                      Organization / Promotion
-                    </label>
-                    <input
-                      type="text"
-                      value={state.organization}
-                      onChange={(e) => update('organization', e.target.value)}
-                      placeholder="e.g. Golden Boy Promotions, Top Rank..."
-                      className={inputClass}
-                    />
+                    <label className="block text-xs font-semibold text-text-muted mb-1">Organization / Promotion</label>
+                    <input type="text" value={state.organization} onChange={(e) => update('organization', e.target.value)} placeholder="e.g. Golden Boy Promotions, Top Rank..." className={inputClass} />
                   </div>
                 </div>
               </div>
-
-              {/* Looking For */}
               <div>
-                <h3 className="text-sm font-bold text-text-primary uppercase tracking-wide mb-3">
-                  What are you looking for?
-                </h3>
+                <h3 className="text-sm font-bold text-text-primary uppercase tracking-wide mb-3">What are you looking for?</h3>
                 <p className="text-xs text-text-muted mb-3">Select all that apply.</p>
                 <div className="flex flex-wrap gap-2">
                   {LOOKING_FOR_OPTIONS.map((item) => (
-                    <Chip
-                      key={item}
-                      label={LOOKING_FOR_LABELS[item] || item}
-                      selected={state.lookingFor.includes(item)}
-                      onClick={() => toggleLookingFor(item)}
-                    />
+                    <Chip key={item} label={LOOKING_FOR_LABELS[item] || item} selected={state.lookingFor.includes(item)} onClick={() => toggleLookingFor(item)} />
                   ))}
                 </div>
               </div>
@@ -707,39 +536,23 @@ export default function OnboardingPage() {
 
         </div>
 
-        {/* Navigation */}
         <div className="flex justify-between gap-4">
-          <button
-            onClick={handleBack}
-            disabled={step === 1}
-            className="px-6 py-3 font-semibold text-text-primary border-2 border-border-DEFAULT rounded-xl hover:border-text-primary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-          >
+          <button onClick={handleBack} disabled={step === 1} className="px-6 py-3 font-semibold text-text-primary border-2 border-border-DEFAULT rounded-xl hover:border-text-primary transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
             Back
           </button>
-
           {step === TOTAL_STEPS ? (
-            <button
-              onClick={handleFinish}
-              disabled={isLoading}
-              className="flex-1 sm:flex-none px-8 py-3 font-semibold text-white bg-fight-red rounded-xl hover:bg-red-700 transition-colors disabled:opacity-50"
-            >
+            <button onClick={handleFinish} disabled={isLoading} className="flex-1 sm:flex-none px-8 py-3 font-semibold text-white bg-fight-red rounded-xl hover:bg-red-700 transition-colors disabled:opacity-50">
               {isLoading ? 'Saving...' : 'Complete Profile →'}
             </button>
           ) : (
-            <button
-              onClick={handleNext}
-              className="flex-1 sm:flex-none px-8 py-3 font-semibold text-white bg-fight-red rounded-xl hover:bg-red-700 transition-colors"
-            >
+            <button onClick={handleNext} className="flex-1 sm:flex-none px-8 py-3 font-semibold text-white bg-fight-red rounded-xl hover:bg-red-700 transition-colors">
               {step === 2 ? 'Skip / Continue →' : 'Continue →'}
             </button>
           )}
         </div>
 
-        {/* Step 2 skip hint */}
         {step === 2 && !state.photoUrl && (
-          <p className="text-center text-xs text-text-muted mt-3">
-            Photo is optional — you can add it from your profile later.
-          </p>
+          <p className="text-center text-xs text-text-muted mt-3">Photo is optional — you can add it from your profile later.</p>
         )}
       </div>
 
