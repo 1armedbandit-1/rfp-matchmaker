@@ -1,6 +1,39 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+
 export default function HomePage() {
+  const [showDraftModal, setShowDraftModal] = useState(false)
+
+  // Load GHL form embed script once
+  useEffect(() => {
+    if (document.querySelector('script[src*="form_embed.js"]')) return
+    const s = document.createElement('script')
+    s.src = 'https://site.realfightpromo.com/js/form_embed.js'
+    s.async = true
+    document.body.appendChild(s)
+  }, [])
+
+  // Listen for GHL form submission → redirect
+  useEffect(() => {
+    function handleMessage(e: MessageEvent) {
+      // GHL fires several event shapes on submission
+      const d = e.data
+      if (!d) return
+      const isSubmit =
+        d.type === 'form-submitted' ||
+        d.event === 'formSubmit' ||
+        d.event === 'form-submitted' ||
+        d.message === 'form-submitted' ||
+        (typeof d === 'string' && d.includes('form-submitted'))
+      if (isSubmit) {
+        window.location.href = 'https://watch.realfightpromo.com'
+      }
+    }
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [])
+
   return (
     <>
       <style>{`
@@ -292,6 +325,56 @@ export default function HomePage() {
         .footer-links a:hover { color: rgba(255,255,255,0.7); }
         .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
 
+        /* ── Draft Modal ── */
+        .modal-backdrop {
+          position: fixed;
+          inset: 0;
+          z-index: 999;
+          background: rgba(0,0,0,0.88);
+          backdrop-filter: blur(6px);
+          display: flex;
+          align-items: flex-start;
+          justify-content: center;
+          padding: 40px 16px 40px;
+          overflow-y: auto;
+        }
+        .modal-box {
+          position: relative;
+          width: 100%;
+          max-width: 680px;
+          background: #0d0d0d;
+          border: 1px solid rgba(220,38,38,0.3);
+          border-radius: 12px;
+          overflow: hidden;
+        }
+        .modal-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 18px 24px;
+          border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+        .modal-header h3 {
+          font-size: 14px;
+          font-weight: 800;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #ef4444;
+        }
+        .modal-close {
+          background: none;
+          border: none;
+          color: rgba(255,255,255,0.45);
+          cursor: pointer;
+          font-size: 22px;
+          line-height: 1;
+          padding: 4px 8px;
+          transition: color 0.2s;
+        }
+        .modal-close:hover { color: #fff; }
+        .modal-body { padding: 0; }
+        .modal-body iframe { display: block; }
+
         /* ── Mobile ── */
         @media (max-width: 640px) {
           nav { padding: 14px 20px; }
@@ -333,13 +416,13 @@ export default function HomePage() {
           <p className="sub-headline">We Help Real Fighters</p>
 
           <div className="cta-group">
-            <a href="/auth/sign-up" className="btn btn-primary">
+            <button onClick={() => setShowDraftModal(true)} className="btn btn-primary">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
               </svg>
               Enter Combat Sports Draft
-            </a>
+            </button>
             <a href="https://ta.realpromo.io/events" className="btn btn-secondary">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
@@ -410,9 +493,9 @@ export default function HomePage() {
       <section className="cta-band">
         <h2>Ready to Enter the Draft?</h2>
         <p>Join the platform that connects every corner of the combat sports world.</p>
-        <a href="/auth/sign-up" className="btn btn-primary">
+        <button onClick={() => setShowDraftModal(true)} className="btn btn-primary">
           Create Your Free Profile →
-        </a>
+        </button>
       </section>
 
       {/* Promotions logos */}
@@ -427,6 +510,37 @@ export default function HomePage() {
           <img src="/logos/toughman.png" alt="Toughman Contest" />
         </div>
       </section>
+
+      {/* Draft Modal */}
+      {showDraftModal && (
+        <div className="modal-backdrop" onClick={(e) => { if (e.target === e.currentTarget) setShowDraftModal(false) }}>
+          <div className="modal-box">
+            <div className="modal-header">
+              <h3>⚡ Enter the Combat Sports Draft</h3>
+              <button className="modal-close" onClick={() => setShowDraftModal(false)}>✕</button>
+            </div>
+            <div className="modal-body">
+              <iframe
+                src="https://site.realfightpromo.com/widget/form/XFHrROVPHixy7rT9kB8x"
+                style={{ width: '100%', height: '2100px', border: 'none' }}
+                id="inline-XFHrROVPHixy7rT9kB8x"
+                data-layout="{'id':'INLINE'}"
+                data-trigger-type="alwaysShow"
+                data-trigger-value=""
+                data-activation-type="alwaysActivated"
+                data-activation-value=""
+                data-deactivation-type="neverDeactivate"
+                data-deactivation-value=""
+                data-form-name="Fighters DB - Lite"
+                data-height="2100"
+                data-layout-iframe-id="inline-XFHrROVPHixy7rT9kB8x"
+                data-form-id="XFHrROVPHixy7rT9kB8x"
+                title="Fighters DB - Lite"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer>
