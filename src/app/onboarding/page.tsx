@@ -320,7 +320,7 @@ export default function OnboardingPage() {
 
       // ── Fire GHL onboarding webhook ──────────────────────────────────────
       try {
-        await fetch('https://services.leadconnectorhq.com/hooks/xw60rwbVDDS9Gb8W1BrT/webhook-trigger/424aaebf-f62e-4793-b741-96155528791b', {
+        await fetch('https://services.leadconnectorhq.com/hooks/xw60rwbVDDS9Gb8W1BrT/webhook-trigger/e438bae5-3382-4d86-a9e0-88c1458d9ccc', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
