@@ -1,7 +1,7 @@
-// @ts-nocheck
+//  @ts-nocheck
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Toast } from '@/components/ui/toast'
@@ -151,6 +151,16 @@ export default function OnboardingPage() {
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
   const [smsSent, setSmsSent] = useState(false)
 
+  // ── auth guard — redirect to login if not signed in ─────────
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user) {
+        window.location.href = '/auth/login?redirect=/onboarding'
+      }
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const update = (key: keyof OnboardingState, value: any) =>
     setState((prev) => ({ ...prev, [key]: value }))
 
@@ -275,6 +285,7 @@ export default function OnboardingPage() {
         other: state.otherRegistryUrl || null,
       }
 
+      // Save to users table
       const { error: userError } = await supabase.from('users').upsert({
         id: user.id,
         display_name: state.displayName || user.email?.split('@')[0] || 'Member',
@@ -297,6 +308,7 @@ export default function OnboardingPage() {
       })
 
       if (userError) {
+        // Re-try without new columns in case migration hasn't run yet
         const { error: retryError } = await supabase.from('users').upsert({
           id: user.id,
           display_name: state.displayName || user.email?.split('@')[0] || 'Member',
@@ -345,6 +357,10 @@ export default function OnboardingPage() {
       setToast({ message: 'Profile saved! Check your email to verify your account.', type: 'success' })
       setTimeout(() => { window.location.href = 'https://watch.realfightpromo.com' }, 2000)
     } catch (err: any) {
+      if (err.message === 'Not signed in') {
+        window.location.href = '/auth/login?redirect=/onboarding'
+        return
+      }
       setToast({ message: err.message || 'Failed to save profile', type: 'error' })
     } finally {
       setIsLoading(false)
