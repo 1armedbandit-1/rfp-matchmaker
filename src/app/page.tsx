@@ -280,19 +280,18 @@ export default function HomePage() {
           align-items: flex-end;
         }
         .founder-side-photo {
-          flex: 1;
+          flex: 0 0 28%;
           aspect-ratio: 4/3;
           object-fit: cover;
           border-radius: 8px;
           border: 2px solid rgba(220,38,38,0.25);
           filter: grayscale(15%);
-          max-height: 200px;
-          width: 100%;
           display: block;
         }
         .founder-main-photo-wrap {
-          flex: 1.3;
+          flex: 1;
           position: relative;
+          min-width: 0;
         }
         .founder-main-photo-wrap img {
           width: 100%;
