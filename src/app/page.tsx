@@ -687,7 +687,7 @@ export default function HomePage() {
       {/* Promo Band */}
       <section className="promo-band">
         <video className="promo-band-video" autoPlay muted loop playsInline>
-          <source src="https://ta.realpromo.io/background.mp4" type="video/mp4" />
+          <source src="/promo-band.mp4" type="video/mp4" />
         </video>
         <div className="promo-band-overlay" />
         <div className="promo-band-content">
@@ -844,11 +844,8 @@ export default function HomePage() {
       <section className="cta-band">
         <h2>Ready to Enter the Draft?</h2>
         <p>Join the platform that connects every corner of the combat sports world.</p>
-        <button onClick={() => setShowDraftModal(true)} className="btn btn-primary">
-          Create Your Free Profile →
-        </button>
 
-        <div className="cta-group" style={{marginTop: '32px', justifyContent: 'center'}}>
+        <div className="cta-group" style={{marginTop: '16px', justifyContent: 'center'}}>
           <button onClick={() => setShowDraftModal(true)} className="btn btn-primary">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
