@@ -267,17 +267,34 @@ export default function HomePage() {
           border-top: 1px solid rgba(220,38,38,0.15);
         }
         .founder-inner {
-          max-width: 1100px;
+          max-width: 1200px;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: 380px 1fr;
+          grid-template-columns: 1fr 1fr;
           gap: 64px;
           align-items: center;
         }
-        .founder-photo {
+        .founder-photo-row {
+          display: flex;
+          gap: 10px;
+          align-items: flex-end;
+        }
+        .founder-side-photo {
+          flex: 1;
+          aspect-ratio: 4/3;
+          object-fit: cover;
+          border-radius: 8px;
+          border: 2px solid rgba(220,38,38,0.25);
+          filter: grayscale(15%);
+          max-height: 200px;
+          width: 100%;
+          display: block;
+        }
+        .founder-main-photo-wrap {
+          flex: 1.3;
           position: relative;
         }
-        .founder-photo img {
+        .founder-main-photo-wrap img {
           width: 100%;
           border-radius: 8px;
           display: block;
@@ -332,7 +349,8 @@ export default function HomePage() {
         }
         @media (max-width: 768px) {
           .founder-inner { grid-template-columns: 1fr; gap: 40px; }
-          .founder-photo { max-width: 340px; margin: 0 auto; }
+          .founder-photo-row { max-width: 380px; margin: 0 auto; }
+          .founder-side-photo { max-height: 140px; }
         }
 
         .scroll-hint {
@@ -612,9 +630,13 @@ export default function HomePage() {
       {/* Founder Story */}
       <section className="founder-section">
         <div className="founder-inner">
-          <div className="founder-photo">
-            <img src="/eric-story.jpg" alt="Eric 'the 1 Armed Bandit' Watkins with champion" />
-            <div className="founder-photo-caption">Eric &quot;the 1 Armed Bandit&quot; Watkins</div>
+          <div className="founder-photo-row">
+            <img className="founder-side-photo" src="/eric-left.jpg" alt="Eric Watkins in action" />
+            <div className="founder-main-photo-wrap">
+              <img src="/eric-story.jpg" alt="Eric 'the 1 Armed Bandit' Watkins with champion" />
+              <div className="founder-photo-caption">Eric &quot;the 1 Armed Bandit&quot; Watkins</div>
+            </div>
+            <img className="founder-side-photo" src="/eric-right.jpg" alt="Eric Watkins in the ring" />
           </div>
           <div className="founder-story">
             <div className="founder-eyebrow">Why We Built This</div>
