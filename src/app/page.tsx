@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 
 export default function HomePage() {
   const [showDraftModal, setShowDraftModal] = useState(false)
+  const [showFeatureModal, setShowFeatureModal] = useState(false)
 
   // Load GHL form embed script once
   useEffect(() => {
@@ -405,8 +406,10 @@ export default function HomePage() {
 
         .features-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 24px;
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+          gap: 20px;
+          max-width: 1300px;
+          margin: 0 auto;
           max-width: 1100px;
           margin: 0 auto;
         }
@@ -423,6 +426,71 @@ export default function HomePage() {
         .feature-icon { font-size: 28px; margin-bottom: 16px; }
         .feature-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
         .feature-card p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.65; }
+        .feature-number { font-size: 10px; font-weight: 800; letter-spacing: 0.2em; color: #dc2626; text-transform: uppercase; margin-bottom: 8px; }
+
+        .feature-request-wrap { text-align: center; margin-top: 48px; }
+        .feature-request-wrap p { font-size: 15px; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
+        .btn-feature-request {
+          background: transparent;
+          border: 2px solid #dc2626;
+          color: #dc2626;
+          padding: 14px 32px;
+          border-radius: 8px;
+          font-size: 13px;
+          font-weight: 800;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition: background 0.2s, color 0.2s;
+        }
+        .btn-feature-request:hover { background: #dc2626; color: #fff; }
+
+        /* ── Feature Request Modal ── */
+        .fr-modal-backdrop {
+          position: fixed; inset: 0; z-index: 1000;
+          background: rgba(0,0,0,0.85);
+          display: flex; align-items: center; justify-content: center;
+          padding: 20px;
+        }
+        .fr-modal-box {
+          background: #141414;
+          border: 1px solid rgba(220,38,38,0.3);
+          border-radius: 16px;
+          padding: 40px;
+          width: 100%; max-width: 520px;
+          position: relative;
+        }
+        .fr-modal-box h3 { font-size: 24px; font-weight: 900; margin-bottom: 6px; }
+        .fr-modal-box p { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 28px; }
+        .fr-field { margin-bottom: 18px; }
+        .fr-field label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
+        .fr-field input, .fr-field textarea {
+          width: 100%; background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.12);
+          border-radius: 8px; padding: 12px 16px;
+          color: #fff; font-size: 15px;
+          outline: none; box-sizing: border-box;
+          transition: border-color 0.2s;
+        }
+        .fr-field input:focus, .fr-field textarea:focus { border-color: #dc2626; }
+        .fr-field textarea { height: 120px; resize: vertical; }
+        .fr-submit {
+          width: 100%; background: #dc2626; color: #fff;
+          border: none; border-radius: 8px; padding: 14px;
+          font-size: 14px; font-weight: 800; letter-spacing: 0.08em;
+          text-transform: uppercase; cursor: pointer;
+          transition: background 0.2s;
+        }
+        .fr-submit:hover { background: #b91c1c; }
+        .fr-close {
+          position: absolute; top: 16px; right: 16px;
+          background: none; border: none; color: rgba(255,255,255,0.4);
+          font-size: 24px; cursor: pointer; line-height: 1;
+        }
+        .fr-success { text-align: center; padding: 20px 0; }
+        .fr-success .fr-check { font-size: 48px; margin-bottom: 16px; }
+        .fr-success h4 { font-size: 20px; font-weight: 900; margin-bottom: 8px; }
+        .fr-success p { font-size: 14px; color: rgba(255,255,255,0.5); }
 
         /* ── CTA band ── */
         .cta-band {
@@ -661,38 +729,114 @@ export default function HomePage() {
 
       {/* What We Offer */}
       <section className="features-section">
-        <h2>Built for the <span className="accent">Fight Game</span></h2>
+        <h2>Everything You Need to <span className="accent">Run the Show</span></h2>
         <div className="features-grid">
+
           <div className="feature-card">
-            <div className="feature-icon">📋</div>
-            <h3>The Fight Board</h3>
-            <p>Old-school community board meets AI agent. Post what you need, browse who's out there — then let the AI cut through the noise and put the right people in front of you. No more cold calls. No more dead ends.</p>
-          </div>
-          <div className="feature-card">
+            <div className="feature-number">01</div>
             <div className="feature-icon">🎟️</div>
-            <h3>Event Ticketing</h3>
-            <p>Buy tickets for upcoming fight cards, access live streams, and follow your favorite fighters — all in one place.</p>
+            <h3>Ticketing — Fully Under Your Roof</h3>
+            <p>Professional e-tickets, great rates, and you control the fees. Custom seating charts, door scanner tool, and confirmation emails — all branded to you. No Ticketmaster. No middleman.</p>
           </div>
+
           <div className="feature-card">
-            <div className="feature-icon">👥</div>
-            <h3>Fighter Network</h3>
-            <p>Connect with fighters, coaches, managers, and promoters across the country. Every profile, every role — the full combat sports ecosystem.</p>
+            <div className="feature-number">02</div>
+            <div className="feature-icon">🥊</div>
+            <h3>AI Fight Matchmaking</h3>
+            <p>Stop making phone calls nobody answers. Our AI matchmaking system connects promoters with fighters and fighters with opponents — based on record, weight class, location, and availability. Get the matches you need, fast.</p>
           </div>
+
           <div className="feature-card">
-            <div className="feature-icon">📊</div>
-            <h3>Promoter Tools</h3>
-            <p>Manage events, scan tickets at the door, send branded confirmation emails, and track gate revenue — purpose-built for regional promotions.</p>
+            <div className="feature-number">03</div>
+            <div className="feature-icon">🏟️</div>
+            <h3>Everything a Promoter Needs</h3>
+            <p>Event management, gate tracking, comp seats, fighter check-in, vendor coordination, and revenue reporting — purpose-built for regional fight promotions. One platform to run the whole night.</p>
           </div>
+
           <div className="feature-card">
-            <div className="feature-icon">🏆</div>
-            <h3>Fighter Profiles</h3>
-            <p>Build a professional fighter profile — record, weight class, reach, stance, availability, and highlights. Your digital fight card.</p>
+            <div className="feature-number">04</div>
+            <div className="feature-icon">🌐</div>
+            <h3>Websites for You & Your Fighters</h3>
+            <p>Get a professional website for your promotion and your fighters — without hiring a developer. Built-in fight records, event pages, ticket links, and bios. Your brand, your platform.</p>
           </div>
+
           <div className="feature-card">
-            <div className="feature-icon">⚡</div>
-            <h3>Live Community Feed</h3>
-            <p>Follow the latest from fighters, trainers, and promoters in your area. Post updates, share results, and stay connected to the scene.</p>
+            <div className="feature-number">05</div>
+            <div className="feature-icon">📺</div>
+            <h3>PPV Streaming — No Middleman</h3>
+            <p>Sell your own pay-per-view stream at your price. Keep the revenue. Broadcast your fight night live directly to fans through your own branded channel. Just like tickets — all under your roof.</p>
           </div>
+
+          <div className="feature-card">
+            <div className="feature-number">06</div>
+            <div className="feature-icon">📲</div>
+            <h3>SMS & Email Marketing</h3>
+            <p>Reach your fans where they actually look. Send fight night reminders, ticket drops, and event announcements via text and email. Built-in tools, no third-party subscriptions required.</p>
+          </div>
+
+          <div className="feature-card">
+            <div className="feature-number">07</div>
+            <div className="feature-icon">📣</div>
+            <h3>Ads for Your Fight or Gym</h3>
+            <p>Get your event or gym in front of the right audience. Run targeted digital ads without needing an agency. Promote your next card, sell more tickets, and grow your following — on your budget.</p>
+          </div>
+
+          <div className="feature-card">
+            <div className="feature-number">08</div>
+            <div className="feature-icon">📅</div>
+            <h3>Social Media Planner & Templates</h3>
+            <p>Schedule your fight promotion content weeks in advance. Built-in templates for countdowns, fighter spotlights, and event announcements — ready to post across Instagram, Facebook, and X.</p>
+          </div>
+
+          <div className="feature-card">
+            <div className="feature-number">09</div>
+            <div className="feature-icon">🎨</div>
+            <h3>Fight Poster Templates & White Label Design</h3>
+            <p>Professional graphic templates for fight posters, flyers, and promo cards — fully customizable with your fighters, logos, and colors. White label design available for promotions that want a custom look.</p>
+          </div>
+
+          <div className="feature-card">
+            <div className="feature-number">10</div>
+            <div className="feature-icon">👕</div>
+            <h3>Merchandise for You & Your Fighters</h3>
+            <p>Sell branded merch directly to your fans — shirts, hats, shorts, and more. Set your prices, we handle fulfillment. Your fighters can have their own store. Another revenue stream, zero hassle.</p>
+          </div>
+
+          <div className="feature-card">
+            <div className="feature-number">11</div>
+            <div className="feature-icon">⚙️</div>
+            <h3>Complete Customization</h3>
+            <p>Every tool, every page, every fee — customizable to your promotion. No two fight nights are the same. Our platform bends to how you run your show, not the other way around.</p>
+          </div>
+
+          <div className="feature-card">
+            <div className="feature-number">12</div>
+            <div className="feature-icon">✍️</div>
+            <h3>Automated Contracts</h3>
+            <p>Getting a signature used to be a nightmare. Now send fighter contracts, get them signed digitally, and store everything automatically. No more chasing people down. No more paperwork piles.</p>
+          </div>
+
+          <div className="feature-card">
+            <div className="feature-number">13</div>
+            <div className="feature-icon">🔌</div>
+            <h3>Open API</h3>
+            <p>Already using other tools? Connect them. Our open API lets developers and tech-savvy promoters plug our platform into any existing system — CRM, accounting, analytics, whatever you need.</p>
+          </div>
+
+          <div className="feature-card">
+            <div className="feature-number">14</div>
+            <div className="feature-icon">🔗</div>
+            <h3>Connect to Any System via Webhooks</h3>
+            <p>We will connect to your existing CRM, software, or workflow via our Open API and webhooks. If you use it, we can work with it. We're built to plug into your world — not replace it.</p>
+          </div>
+
+        </div>
+
+        <div className="feature-request-wrap">
+          <p>Don&apos;t see what you need? Tell us — we build what the fight game needs.</p>
+          <button className="btn-feature-request" onClick={() => setShowFeatureModal(true)}>
+            🚀 Submit a Feature Request
+          </button>
         </div>
       </section>
 
@@ -703,6 +847,37 @@ export default function HomePage() {
         <button onClick={() => setShowDraftModal(true)} className="btn btn-primary">
           Create Your Free Profile →
         </button>
+
+        <div className="cta-group" style={{marginTop: '32px', justifyContent: 'center'}}>
+          <button onClick={() => setShowDraftModal(true)} className="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            Click Here to Get Matched for Fights
+          </button>
+          <a href="https://ta.realpromo.io/events" className="btn btn-secondary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
+            </svg>
+            Get E-Tickets For Your Show
+          </a>
+          <a href="https://watch.realfightpromo.com" className="btn btn-stream" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            Get Stream For Your Show
+          </a>
+        </div>
+
+        <div className="cta-group-small" style={{marginTop: '16px', justifyContent: 'center'}}>
+          <a href="https://ta.realpromo.io/events" className="btn-sm btn-sm-ticket">
+            🎟️ Buy Tickets for Event
+          </a>
+          <a href="https://watch.realfightpromo.com" className="btn-sm btn-sm-stream" target="_blank" rel="noopener noreferrer">
+            ▶ Video Stream For Event
+          </a>
+        </div>
       </section>
 
       {/* Promotions logos */}
@@ -745,6 +920,34 @@ export default function HomePage() {
                 title="Fighters DB - Lite"
               />
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Feature Request Modal */}
+      {showFeatureModal && (
+        <div className="fr-modal-backdrop" onClick={(e) => { if (e.target === e.currentTarget) setShowFeatureModal(false); }}>
+          <div className="fr-modal-box">
+            <button className="fr-close" onClick={() => setShowFeatureModal(false)}>✕</button>
+            <h3>🚀 Request a Feature</h3>
+            <p>Got an idea that would make your promotion run better? Tell us — we build what the fight game needs.</p>
+            <iframe
+              src="https://site.realfightpromo.com/widget/form/OgtwhUkhJxk5QujlpgaH"
+              style={{ width: '100%', height: '958px', border: 'none', borderRadius: '3px' }}
+              id="inline-OgtwhUkhJxk5QujlpgaH"
+              data-layout="{'id':'INLINE'}"
+              data-trigger-type="alwaysShow"
+              data-trigger-value=""
+              data-activation-type="alwaysActivated"
+              data-activation-value=""
+              data-deactivation-type="neverDeactivate"
+              data-deactivation-value=""
+              data-form-name="Feature Request"
+              data-height="958"
+              data-layout-iframe-id="inline-OgtwhUkhJxk5QujlpgaH"
+              data-form-id="OgtwhUkhJxk5QujlpgaH"
+              title="Feature Request"
+            />
           </div>
         </div>
       )}
