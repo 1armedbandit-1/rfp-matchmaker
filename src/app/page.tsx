@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 export default function HomePage() {
   const [showDraftModal, setShowDraftModal] = useState(false)
   const [showFeatureModal, setShowFeatureModal] = useState(false)
+  const [showPromoterModal, setShowPromoterModal] = useState(false)
 
   // Load GHL form embed script once
   useEffect(() => {
@@ -646,27 +647,27 @@ export default function HomePage() {
               </svg>
               Click Here to Get Matched for Fights
             </button>
-            <a href="https://ta.realpromo.io/events" className="btn btn-secondary">
+            <button onClick={() => setShowPromoterModal(true)} className="btn btn-secondary">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
               </svg>
               Get E-Tickets For Your Show
-            </a>
-            <a href="https://watch.realfightpromo.com" className="btn btn-stream" target="_blank" rel="noopener noreferrer">
+            </button>
+            <button onClick={() => setShowPromoterModal(true)} className="btn btn-stream">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="5 3 19 12 5 21 5 3"/>
               </svg>
               Get Stream For Your Show
-            </a>
+            </button>
           </div>
 
           <div className="cta-group-small">
-            <a href="https://ta.realpromo.io/events" className="btn-sm btn-sm-ticket">
+            <button onClick={() => setShowPromoterModal(true)} className="btn-sm btn-sm-ticket">
               🎟️ Buy Tickets for Event
-            </a>
-            <a href="https://watch.realfightpromo.com" className="btn-sm btn-sm-stream" target="_blank" rel="noopener noreferrer">
+            </button>
+            <button onClick={() => setShowPromoterModal(true)} className="btn-sm btn-sm-stream">
               ▶ Video Stream For Event
-            </a>
+            </button>
           </div>
         </div>
 
@@ -853,27 +854,27 @@ export default function HomePage() {
             </svg>
             Click Here to Get Matched for Fights
           </button>
-          <a href="https://ta.realpromo.io/events" className="btn btn-secondary">
+          <button onClick={() => setShowPromoterModal(true)} className="btn btn-secondary">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
             </svg>
             Get E-Tickets For Your Show
-          </a>
-          <a href="https://watch.realfightpromo.com" className="btn btn-stream" target="_blank" rel="noopener noreferrer">
+          </button>
+          <button onClick={() => setShowPromoterModal(true)} className="btn btn-stream">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <polygon points="5 3 19 12 5 21 5 3"/>
             </svg>
             Get Stream For Your Show
-          </a>
+          </button>
         </div>
 
         <div className="cta-group-small" style={{marginTop: '16px', justifyContent: 'center'}}>
-          <a href="https://ta.realpromo.io/events" className="btn-sm btn-sm-ticket">
+          <button onClick={() => setShowPromoterModal(true)} className="btn-sm btn-sm-ticket">
             🎟️ Buy Tickets for Event
-          </a>
-          <a href="https://watch.realfightpromo.com" className="btn-sm btn-sm-stream" target="_blank" rel="noopener noreferrer">
+          </button>
+          <button onClick={() => setShowPromoterModal(true)} className="btn-sm btn-sm-stream">
             ▶ Video Stream For Event
-          </a>
+          </button>
         </div>
       </section>
 
@@ -917,6 +918,34 @@ export default function HomePage() {
                 title="Fighters DB - Lite"
               />
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Promoter / Tickets & Stream Modal */}
+      {showPromoterModal && (
+        <div className="fr-modal-backdrop" onClick={(e) => { if (e.target === e.currentTarget) setShowPromoterModal(false); }}>
+          <div className="fr-modal-box" style={{maxWidth: '600px'}}>
+            <button className="fr-close" onClick={() => setShowPromoterModal(false)}>✕</button>
+            <h3>🎟️ Get Tickets &amp; Stream For Your Show</h3>
+            <p>Fill out the form below and we&apos;ll get your ticketing and stream set up under your roof.</p>
+            <iframe
+              src="https://site.realfightpromo.com/widget/form/s1y3dMvmLtoygJ8iY9qg"
+              style={{ width: '100%', height: '1028px', border: 'none', borderRadius: '3px' }}
+              id="inline-s1y3dMvmLtoygJ8iY9qg"
+              data-layout="{'id':'INLINE'}"
+              data-trigger-type="alwaysShow"
+              data-trigger-value=""
+              data-activation-type="alwaysActivated"
+              data-activation-value=""
+              data-deactivation-type="neverDeactivate"
+              data-deactivation-value=""
+              data-form-name="Promoter/Matchmaker DB-Lite"
+              data-height="1028"
+              data-layout-iframe-id="inline-s1y3dMvmLtoygJ8iY9qg"
+              data-form-id="s1y3dMvmLtoygJ8iY9qg"
+              title="Promoter/Matchmaker DB-Lite"
+            />
           </div>
         </div>
       )}
