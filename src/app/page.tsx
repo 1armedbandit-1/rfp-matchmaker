@@ -398,7 +398,7 @@ export default function HomePage() {
           <li><a href="/match">Matchmaking</a></li>
           <li><a href="https://ta.realpromo.io/events">Stream</a></li>
           <li><a href="/blog">Blog</a></li>
-          <li><a href="/auth/sign-in" className="sign-in">Sign In</a></li>
+          <li><a href="https://watch.realfightpromo.com" className="sign-in" target="_blank" rel="noopener noreferrer">Sign In</a></li>
         </ul>
       </nav>
 
@@ -551,7 +551,7 @@ export default function HomePage() {
           <a href="#">Terms &amp; Conditions</a>
           <a href="#">Privacy Policy</a>
           <a href="https://ta.realpromo.io/events">Get Tickets</a>
-          <a href="/auth/sign-in">Sign In</a>
+          <a href="https://watch.realfightpromo.com" target="_blank" rel="noopener noreferrer">Sign In</a>
         </nav>
         <p className="footer-copy">Copyright 2026 | Real Fight Promotion &nbsp;·&nbsp; Morgantown, WV &nbsp;·&nbsp; info@realpromo.io</p>
       </footer>
