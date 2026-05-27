@@ -260,6 +260,81 @@ export default function HomePage() {
           color: rgba(255,255,255,0.7);
         }
 
+        /* ── Founder Story ── */
+        .founder-section {
+          padding: 80px 40px;
+          background: #0a0a0a;
+          border-top: 1px solid rgba(220,38,38,0.15);
+        }
+        .founder-inner {
+          max-width: 1100px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: 380px 1fr;
+          gap: 64px;
+          align-items: center;
+        }
+        .founder-photo {
+          position: relative;
+        }
+        .founder-photo img {
+          width: 100%;
+          border-radius: 8px;
+          display: block;
+          border: 2px solid rgba(220,38,38,0.25);
+          filter: grayscale(15%);
+        }
+        .founder-photo-caption {
+          position: absolute;
+          bottom: 0; left: 0; right: 0;
+          padding: 14px 18px;
+          background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+          border-radius: 0 0 8px 8px;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #dc2626;
+        }
+        .founder-story {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+        .founder-eyebrow {
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          color: #dc2626;
+        }
+        .founder-story h2 {
+          font-size: clamp(28px, 3.5vw, 44px);
+          font-weight: 900;
+          line-height: 1.05;
+          letter-spacing: -0.01em;
+          color: #fff;
+        }
+        .founder-story h2 span { color: #dc2626; }
+        .founder-quote {
+          font-size: 17px;
+          line-height: 1.75;
+          color: rgba(255,255,255,0.75);
+          border-left: 3px solid #dc2626;
+          padding-left: 20px;
+          font-style: italic;
+        }
+        .founder-sig {
+          font-size: 13px;
+          font-weight: 700;
+          color: rgba(255,255,255,0.45);
+          letter-spacing: 0.05em;
+        }
+        @media (max-width: 768px) {
+          .founder-inner { grid-template-columns: 1fr; gap: 40px; }
+          .founder-photo { max-width: 340px; margin: 0 auto; }
+        }
+
         .scroll-hint {
           position: absolute;
           bottom: 40px;
@@ -531,6 +606,32 @@ export default function HomePage() {
         <div className="promo-band-content">
           <h2 className="promo-band-headline">We Bring Tickets &amp; Stream<br />Under Your Roof<br />No More Middleman</h2>
           <p className="promo-band-sub">Built for the Combat Sports Industry</p>
+        </div>
+      </section>
+
+      {/* Founder Story */}
+      <section className="founder-section">
+        <div className="founder-inner">
+          <div className="founder-photo">
+            <img src="/eric-story.jpg" alt="Eric 'the 1 Armed Bandit' Watkins with champion" />
+            <div className="founder-photo-caption">Eric &quot;the 1 Armed Bandit&quot; Watkins</div>
+          </div>
+          <div className="founder-story">
+            <div className="founder-eyebrow">Why We Built This</div>
+            <h2>From <span>Broke Fighter</span> to<br />Boxing Promoter</h2>
+            <p className="founder-quote">
+              I started as a broke, uneducated fighter right here in Morgantown, WV. Broke my arm
+              in my very first fight at this arena — that&apos;s where the nickname came from. 24
+              amateur fights. 24 pro fights. Went from this building to Las Vegas twice, Madison
+              Square Garden, Turning Stone, Foxwoods — and ended my career against the GOAT,
+              Roy Jones Jr. Along the way I learned how to sell tickets, build a network, and
+              make it happen. During COVID I started my own promotion. We&apos;ve put on 11
+              successful fight nights right here in good ol&apos; Morgantown. Then I went into
+              tech and kept thinking: I&apos;d rather help fighters and promoters — because
+              I&nbsp;<em>am</em>&nbsp;you. Boxing changed my life. I want it to change yours too.
+            </p>
+            <div className="founder-sig">— Eric &quot;the 1 Armed Bandit&quot; Watkins · Founder, Real Fight Promotions</div>
+          </div>
         </div>
       </section>
 
