@@ -631,7 +631,7 @@ export default function HomePage() {
       <section className="founder-section">
         <div className="founder-inner">
           <div className="founder-photo-row">
-            <img className="founder-side-photo" src="/eric-left.jpg" alt="Eric Watkins in action" />
+            <img className="founder-side-photo" src="/eric-left.JPG" alt="Eric Watkins in action" />
             <div className="founder-main-photo-wrap">
               <img src="/eric-story.jpg" alt="Eric 'the 1 Armed Bandit' Watkins with champion" />
               <div className="founder-photo-caption">Eric &quot;the 1 Armed Bandit&quot; Watkins</div>
