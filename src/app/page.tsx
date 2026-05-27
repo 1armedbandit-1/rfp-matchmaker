@@ -642,12 +642,13 @@ export default function HomePage() {
             <div className="founder-eyebrow">Why We Built This</div>
             <h2>From <span>Broke Fighter</span> to<br />Boxing Promoter</h2>
             <p className="founder-quote">
-              I started as a broke, uneducated fighter right here in Morgantown, WV. Broke my arm
-              in my very first fight at this arena — that&apos;s where the nickname came from. 24
-              amateur fights. 24 pro fights. Went from this building to Las Vegas twice, Madison
-              Square Garden, Turning Stone, Foxwoods — and ended my career against the GOAT,
-              Roy Jones Jr. Along the way I learned how to sell tickets, build a network, and
-              make it happen. During COVID I started my own promotion. We&apos;ve put on 11
+              I started as a broke fighter right here in Morgantown, WV. To add insult to injury
+              — literally — I broke my arm in my very first fight at this arena. That&apos;s where
+              the nickname came from. I&apos;ve made $700. $400 guaranteed plus ticket sales
+              commission. 24 amateur fights. 24 pro fights. Went from this building to Las Vegas
+              twice, Madison Square Garden, Turning Stone, Foxwoods — and ended my career against
+              the GOAT, Roy Jones Jr. Along the way I learned how to sell tickets, build a network,
+              and make it happen. During COVID I started my own promotion. We&apos;ve put on 11
               successful fight nights right here in good ol&apos; Morgantown. Then I went into
               tech and kept thinking: I&apos;d rather help fighters and promoters — because
               I&nbsp;<em>am</em>&nbsp;you. Boxing changed my life. I want it to change yours too.
