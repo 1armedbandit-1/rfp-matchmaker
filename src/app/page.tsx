@@ -173,6 +173,15 @@ export default function HomePage() {
           align-items: center;
         }
 
+        .cta-group-small {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          justify-content: center;
+          align-items: center;
+          margin-top: 14px;
+        }
+
         .btn {
           display: inline-flex;
           align-items: center;
@@ -198,6 +207,58 @@ export default function HomePage() {
 
         .btn-stream { background: rgba(220,38,38,0.12); color: #ef4444; border: 2px solid rgba(220,38,38,0.5); }
         .btn-stream:hover { background: rgba(220,38,38,0.2); border-color: #dc2626; transform: translateY(-2px); }
+
+        .btn-sm { font-size: 11px; padding: 12px 24px; font-weight: 700; letter-spacing: 0.08em; border-radius: 4px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s; border: none; }
+        .btn-sm-ticket { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+        .btn-sm-ticket:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+        .btn-sm-stream { background: rgba(220,38,38,0.1); color: #ef4444; border: 1px solid rgba(220,38,38,0.35); }
+        .btn-sm-stream:hover { background: rgba(220,38,38,0.2); transform: translateY(-2px); }
+
+        /* ── Promo Band ── */
+        .promo-band {
+          position: relative;
+          overflow: hidden;
+          padding: 100px 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+        }
+        .promo-band-video {
+          position: absolute;
+          inset: 0;
+          width: 100%; height: 100%;
+          object-fit: cover;
+          z-index: 0;
+          filter: brightness(0.3) saturate(0.7);
+        }
+        .promo-band-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.65) 100%);
+          z-index: 1;
+        }
+        .promo-band-content {
+          position: relative;
+          z-index: 2;
+          max-width: 900px;
+        }
+        .promo-band-headline {
+          font-size: clamp(36px, 6vw, 80px);
+          font-weight: 900;
+          line-height: 1.0;
+          letter-spacing: -0.02em;
+          text-transform: uppercase;
+          color: #dc2626;
+          margin-bottom: 24px;
+        }
+        .promo-band-sub {
+          font-size: clamp(14px, 2vw, 20px);
+          font-weight: 700;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.7);
+        }
 
         .scroll-hint {
           position: absolute;
@@ -413,7 +474,7 @@ export default function HomePage() {
           <img src="/logo.jpg" alt="Real Fight Promotions" className="hero-logo" />
           <div className="eyebrow">▲ Combat Sports Platform</div>
           <h1>Real <span className="accent">Fight</span><br />Promotion</h1>
-          <p className="sub-headline">We Help Real Fighters</p>
+          <p className="sub-headline">We Help Real Fighters &amp; Promoters</p>
 
           <div className="cta-group">
             <button onClick={() => setShowDraftModal(true)} className="btn btn-primary">
@@ -421,19 +482,28 @@ export default function HomePage() {
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
               </svg>
-              Enter Combat Sports Draft
+              Click Here to Get Matched for Fights
             </button>
             <a href="https://ta.realpromo.io/events" className="btn btn-secondary">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
               </svg>
-              Get Tickets
+              Get E-Tickets For Your Show
             </a>
-            <a href="https://ta.realpromo.io/events" className="btn btn-stream">
+            <a href="https://watch.realfightpromo.com" className="btn btn-stream" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="5 3 19 12 5 21 5 3"/>
               </svg>
-              Watch Stream
+              Get Stream For Your Show
+            </a>
+          </div>
+
+          <div className="cta-group-small">
+            <a href="https://ta.realpromo.io/events" className="btn-sm btn-sm-ticket">
+              🎟️ Buy Tickets for Event
+            </a>
+            <a href="https://watch.realfightpromo.com" className="btn-sm btn-sm-stream" target="_blank" rel="noopener noreferrer">
+              ▶ Video Stream For Event
             </a>
           </div>
         </div>
@@ -451,6 +521,18 @@ export default function HomePage() {
         <div className="stat"><div className="stat-number">7</div><div className="stat-label">Promotions</div></div>
         <div className="stat"><div className="stat-number">50,000</div><div className="stat-label">Fans</div></div>
       </div>
+
+      {/* Promo Band */}
+      <section className="promo-band">
+        <video className="promo-band-video" autoPlay muted loop playsInline>
+          <source src="https://ta.realpromo.io/background.mp4" type="video/mp4" />
+        </video>
+        <div className="promo-band-overlay" />
+        <div className="promo-band-content">
+          <h2 className="promo-band-headline">We Bring Tickets &amp; Stream<br />Under Your Roof<br />No More Middleman</h2>
+          <p className="promo-band-sub">Built for the Combat Sports Industry</p>
+        </div>
+      </section>
 
       {/* What We Offer */}
       <section className="features-section">
