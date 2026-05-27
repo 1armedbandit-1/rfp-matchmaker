@@ -276,13 +276,15 @@ export default function HomePage() {
         }
         .founder-photo-row {
           display: flex;
-          gap: 10px;
+          gap: 8px;
           align-items: flex-end;
         }
         .founder-side-photo {
-          flex: 0 0 28%;
-          aspect-ratio: 4/3;
+          width: 28%;
+          height: 210px;
           object-fit: cover;
+          object-position: center;
+          flex-shrink: 0;
           border-radius: 8px;
           border: 2px solid rgba(220,38,38,0.25);
           filter: grayscale(15%);
@@ -290,13 +292,13 @@ export default function HomePage() {
         }
         .founder-main-photo-wrap {
           flex: 1;
-          position: relative;
           min-width: 0;
+          position: relative;
         }
         .founder-main-photo-wrap img {
           width: 100%;
-          border-radius: 8px;
           display: block;
+          border-radius: 8px;
           border: 2px solid rgba(220,38,38,0.25);
           filter: grayscale(15%);
         }
@@ -348,8 +350,8 @@ export default function HomePage() {
         }
         @media (max-width: 768px) {
           .founder-inner { grid-template-columns: 1fr; gap: 40px; }
-          .founder-photo-row { max-width: 380px; margin: 0 auto; }
-          .founder-side-photo { max-height: 140px; }
+          .founder-photo-row { max-width: 400px; margin: 0 auto; }
+          .founder-side-photo { height: 130px; }
         }
 
         .scroll-hint {
