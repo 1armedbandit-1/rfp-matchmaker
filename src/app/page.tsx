@@ -662,12 +662,12 @@ export default function HomePage() {
           </div>
 
           <div className="cta-group-small">
-            <button onClick={() => setShowPromoterModal(true)} className="btn-sm btn-sm-ticket">
+            <a href="https://ta.realpromo.io/events" className="btn-sm btn-sm-ticket">
               🎟️ Buy Tickets for Event
-            </button>
-            <button onClick={() => setShowPromoterModal(true)} className="btn-sm btn-sm-stream">
+            </a>
+            <a href="https://watch.realfightpromo.com" className="btn-sm btn-sm-stream" target="_blank" rel="noopener noreferrer">
               ▶ Video Stream For Event
-            </button>
+            </a>
           </div>
         </div>
 
@@ -742,16 +742,16 @@ export default function HomePage() {
 
           <div className="feature-card">
             <div className="feature-number">02</div>
-            <div className="feature-icon">🥊</div>
-            <h3>AI Fight Matchmaking</h3>
-            <p>Stop making phone calls nobody answers. Our AI matchmaking system connects promoters with fighters and fighters with opponents — based on record, weight class, location, and availability. Get the matches you need, fast.</p>
+            <div className="feature-icon">🧠</div>
+            <h3>Complete Internal Operating System</h3>
+            <p>Tickets. SMS & email marketing. Website builder. Social media posting. AI integrations. Facebook & Google Ads. CRM pipeline. Automation workflows. Event check-in. Revenue reporting. Gate tracking. Vendor coordination. Fighter management. One super-tool — built to do as much as possible so you can focus on putting on the show.</p>
           </div>
 
           <div className="feature-card">
             <div className="feature-number">03</div>
-            <div className="feature-icon">🏟️</div>
-            <h3>Everything a Promoter Needs</h3>
-            <p>Event management, gate tracking, comp seats, fighter check-in, vendor coordination, and revenue reporting — purpose-built for regional fight promotions. One platform to run the whole night.</p>
+            <div className="feature-icon">🥊</div>
+            <h3>AI Fight Matchmaking</h3>
+            <p>Stop making phone calls nobody answers. Our AI matchmaking system connects promoters with fighters and fighters with opponents — based on record, weight class, location, and availability. Get the matches you need, fast.</p>
           </div>
 
           <div className="feature-card">
