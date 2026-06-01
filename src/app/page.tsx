@@ -29,7 +29,7 @@ export default function HomePage() {
         d.message === 'form-submitted' ||
         (typeof d === 'string' && d.includes('form-submitted'))
       if (isSubmit) {
-        window.location.href = 'https://watch.realfightpromo.com'
+        window.location.href = 'https://realfightpromo.com'
       }
     }
     window.addEventListener('message', handleMessage)
@@ -450,8 +450,9 @@ export default function HomePage() {
         .fr-modal-backdrop {
           position: fixed; inset: 0; z-index: 1000;
           background: rgba(0,0,0,0.85);
-          display: flex; align-items: center; justify-content: center;
+          display: flex; align-items: flex-start; justify-content: center;
           padding: 20px;
+          overflow-y: auto;
         }
         .fr-modal-box {
           background: #141414;
@@ -460,6 +461,7 @@ export default function HomePage() {
           padding: 40px;
           width: 100%; max-width: 520px;
           position: relative;
+          margin: auto;
         }
         .fr-modal-box h3 { font-size: 24px; font-weight: 900; margin-bottom: 6px; }
         .fr-modal-box p { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 28px; }
@@ -622,7 +624,7 @@ export default function HomePage() {
           <li><a href="/match">Matchmaking</a></li>
           <li><a href="https://ta.realpromo.io/events">Stream</a></li>
           <li><a href="/blog">Blog</a></li>
-          <li><a href="https://watch.realfightpromo.com" className="sign-in" target="_blank" rel="noopener noreferrer">Sign In</a></li>
+          <li><a href="https://realfightpromo.com" className="sign-in" target="_blank" rel="noopener noreferrer">Sign In</a></li>
         </ul>
       </nav>
 
@@ -662,10 +664,10 @@ export default function HomePage() {
           </div>
 
           <div className="cta-group-small">
-            <a href="https://ta.realpromo.io/events" className="btn-sm btn-sm-ticket">
+            <a href="https://realfightpromo.com" target="_blank" rel="noopener noreferrer" className="btn-sm btn-sm-ticket">
               🎟️ Buy Tickets for Event
             </a>
-            <a href="https://watch.realfightpromo.com" className="btn-sm btn-sm-stream" target="_blank" rel="noopener noreferrer">
+            <a href="https://realfightpromo.com" className="btn-sm btn-sm-stream" target="_blank" rel="noopener noreferrer">
               ▶ Video Stream For Event
             </a>
           </div>
@@ -987,7 +989,7 @@ export default function HomePage() {
           <a href="#">Terms &amp; Conditions</a>
           <a href="#">Privacy Policy</a>
           <a href="https://ta.realpromo.io/events">Get Tickets</a>
-          <a href="https://watch.realfightpromo.com" target="_blank" rel="noopener noreferrer">Sign In</a>
+          <a href="https://realfightpromo.com" target="_blank" rel="noopener noreferrer">Sign In</a>
         </nav>
         <p className="footer-copy">Copyright 2026 | Real Fight Promotion &nbsp;·&nbsp; Morgantown, WV &nbsp;·&nbsp; info@realpromo.io</p>
       </footer>
