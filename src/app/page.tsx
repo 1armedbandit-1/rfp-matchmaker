@@ -756,8 +756,8 @@ export default function HomePage() {
           <div className="feature-card">
             <div className="feature-number">03</div>
             <div className="feature-icon">🥊</div>
-            <h3>AI Fight Matchmaking</h3>
-            <p>Stop making phone calls nobody answers. Our AI matchmaking system connects promoters with fighters and fighters with opponents — based on record, weight class, location, and availability. Get the matches you need, fast.</p>
+            <h3>Matchmaking Minus a Few Headaches</h3>
+            <p>Matchmaking will always be a grind — but we've cut down the pain. A consolidated database pulling from promotions all over the country. AI and automation for outreach through combat sports registries and social media. Matchmaking will never be one-click easy, but we're working to make it fewer clicks, fewer calls, less time, and fewer headaches.</p>
           </div>
 
           <div className="feature-card">
