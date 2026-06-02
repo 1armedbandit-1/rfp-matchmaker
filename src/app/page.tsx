@@ -694,7 +694,7 @@ export default function HomePage() {
       {/* Promo Band */}
       <section className="promo-band">
         <video className="promo-band-video" autoPlay muted loop playsInline>
-          <source src="/arena%20ticket%20bg.mp4" type="video/mp4" />
+          <source src="/arena-ticket-bg.mp4" type="video/mp4" />
         </video>
         <div className="promo-band-overlay" />
         <div className="promo-band-content">
