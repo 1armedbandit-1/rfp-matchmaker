@@ -220,7 +220,7 @@ export default function HomePage() {
         .promo-band {
           position: relative;
           overflow: hidden;
-          padding: 100px 40px;
+          padding: 140px 40px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -232,7 +232,7 @@ export default function HomePage() {
           width: 100%; height: 100%;
           object-fit: cover;
           z-index: 0;
-          filter: brightness(0.3) saturate(0.7);
+          filter: brightness(0.25) saturate(0.6);
         }
         .promo-band-overlay {
           position: absolute;
@@ -246,20 +246,24 @@ export default function HomePage() {
           max-width: 900px;
         }
         .promo-band-headline {
-          font-size: clamp(36px, 6vw, 80px);
-          font-weight: 900;
-          line-height: 1.0;
+          font-size: clamp(18px, 3vw, 28px);
+          font-weight: 700;
+          letter-spacing: 0.25em;
+          text-transform: uppercase;
+          line-height: 1.2;
           letter-spacing: -0.02em;
           text-transform: uppercase;
-          color: #dc2626;
-          margin-bottom: 24px;
+          color: rgba(255,255,255,0.55);
+          margin-bottom: 16px;
         }
         .promo-band-sub {
-          font-size: clamp(14px, 2vw, 20px);
-          font-weight: 700;
-          letter-spacing: 0.2em;
+          font-size: clamp(52px, 10vw, 140px);
+          font-weight: 900;
+          letter-spacing: -0.02em;
+          line-height: 0.95;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.7);
+          color: #ffffff;
+          text-shadow: 0 0 60px rgba(220,38,38,0.6), 0 4px 24px rgba(0,0,0,0.9);
         }
 
         /* ── Founder Story ── */
@@ -694,8 +698,8 @@ export default function HomePage() {
         </video>
         <div className="promo-band-overlay" />
         <div className="promo-band-content">
-          <h2 className="promo-band-headline">We Bring Tickets &amp; Stream<br />Under Your Roof<br />No More Middleman</h2>
-          <p className="promo-band-sub">Built for the Combat Sports Industry</p>
+          <p className="promo-band-headline">We Bring Tickets &amp; Stream Under Your Roof — No More Middleman</p>
+          <h2 className="promo-band-sub">Built for<br />Combat Sports</h2>
         </div>
       </section>
 
